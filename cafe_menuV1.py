@@ -19,7 +19,7 @@ from tkinter import messagebox
 accounts = {}
 
 
-root = tk.Tk()
+root = tk.Toplevel()
 root.title("Cafe Menu")
 root.geometry("3000x2000")
 root.configure(bg="#faedcd")
@@ -29,11 +29,9 @@ label = tk.Label(root, text="𝓦𝓮𝓵𝓸𝓬𝓶 𝓽𝓸 𝓽𝓱𝓮 𝓒
 label.pack(pady=20)
 
 
-
-
 # login page function
 def login_page():
-    root = tk.Tk()
+    root = tk.Toplevel()
     root.title("Login Page")
     root.geometry("3000x2000")
     root.configure(bg="#faedcd")
@@ -72,13 +70,10 @@ def login_page():
 login_button = tk.Button(root, text="𝓛𝓸𝓰𝓲𝓷 𝓹𝓪𝓰𝓮", command=login_page,width=70, height=2, font=(30), fg="white", bg="#d4a373")
 login_button.pack(pady=50)
 
-    
-
-
 
 # Sign up page function
 def signup_page():
-    root = tk.Tk()
+    root = tk.Toplevel()
     root.title("Sign Up Page")
     root.geometry("3000x2000")
     root.configure(bg="#faedcd")
@@ -118,8 +113,6 @@ signup_button = tk.Button(root, text="𝓢𝓲𝓰𝓷𝓾𝓹 𝓹𝓪𝓰𝓮"
 signup_button.pack(pady=50)
 
 
-
-
 # View my order page function
 def view_order_page():
     order_window = tk.Toplevel(root)
@@ -142,7 +135,7 @@ view_order_button.pack(pady=50)
 
 
 def menu_page():
-    root = tk.Tk()
+    root = tk.Toplevel()
     root.title("Menu Page")
     root.geometry("3000x2000")
     root.configure(bg="#faedcd")
@@ -150,8 +143,8 @@ def menu_page():
     tk.Label(root, text="𝓜𝓮𝓷𝓾", font=("Arial", 40), bg="#faedcd")\
         .grid(row=0, column=0, columnspan=2, pady=20)
 
-    canvas = tk.Canvas(root, width=1000, height=750, bg="#d4aa73")
-    canvas.grid(row=1, column=1, pady=20, padx=40)
+    canvas = tk.Canvas(root, width=960, height=600, bg="#d4aa73")
+    canvas.grid(row=1, column=1, pady=20, padx=270,)
 
     # item 1
     canvas.create_rectangle(50, 50, 450, 270, fill="#faedcd", outline="black")
@@ -172,28 +165,30 @@ def menu_page():
     canvas.create_window(700, 200, window=btn2)
 
     # item 3
-    canvas.create_rectangle(50, 50, 450, 470, fill="#faedcd", outline="black")
+    canvas.create_rectangle(50, 300, 450, 530, fill="#faedcd", outline="black")
 
     item3 = tk.Label(root, text="Macha", font=("Arial", 20),bg="#faedcd")
     btn3 = tk.Button(root, text="Customize", bg="#d4aa73", fg="white", font=("Arial", 20))
 
-    canvas.create_window(250, 420, window=item3) 
-    canvas.create_window(250, 500, window=btn3)
+    canvas.create_window(250, 370, window=item3) 
+    canvas.create_window(250, 450, window=btn3)
 
     # item 4
-    canvas.create_rectangle(500, 50, 900, 270, fill="#faedcd", outline="black")
+    canvas.create_rectangle(500, 300, 900, 530, fill="#faedcd", outline="black")
 
     item4 = tk.Label(root, text="Tea", font=("Arial", 20), bg="#faedcd")
     btn4 = tk.Button(root, text="Customize", bg="#d4aa73", fg="white", font=("Arial", 20))
 
-    canvas.create_window(700, 120, window=item4)
-    canvas.create_window(700, 200, window=btn4)
+    canvas.create_window(700, 370, window=item4)
+    canvas.create_window(700, 450, window=btn4)
 
+    next_btn = tk.Button(root, text="Next", command=view_order_page,font=(30), bg="#d4a373")
+    next_btn.place(x=1800, y=400)
 
     
     
 def main_page():
-    root = tk.Tk()
+    root = tk.Toplevel()
     root.title("Cafe Menu")
     root.geometry("3000x2000")
     root.configure(bg="#faedcd")
