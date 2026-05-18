@@ -144,7 +144,7 @@ def menu_page2(old_window):
     menu2_p.geometry("3000x2000")
     menu2_p.configure(bg="#faedcd")
 
-    tk.Label(menu2_p, text="𝓜𝓮𝓷𝓾 𝓟𝓪𝓰𝓮【２】", font=("Arial", 40), bg="#faedcd")\
+    tk.Label(menu2_p, text="𝓜𝓮𝓷𝓾 𝓟𝓪𝓰𝓮【２】\n𝓕𝓸𝓸𝓭", font=("Arial", 40), bg="#faedcd")\
         .grid(row=0, column=0, columnspan=2, pady=20)
 
     canvas = tk.Canvas(menu2_p, width=960, height=600, bg="#d4aa73")
@@ -153,7 +153,7 @@ def menu_page2(old_window):
     # item 1
     canvas.create_rectangle(50, 50, 450, 270, fill="#faedcd", outline="black")
 
-    item = tk.Label(menu2_p, text="Hot chocolate", font=("Arial", 20),bg="#faedcd")
+    item = tk.Label(menu2_p, text="Burger", font=("Arial", 20),bg="#faedcd")
     btn = tk.Button(menu2_p, text="Customize", bg="#d4aa73", fg="white", font=("Arial", 20))
 
     canvas.create_window(250, 120, window=item) 
@@ -162,7 +162,7 @@ def menu_page2(old_window):
     # item 2
     canvas.create_rectangle(500, 50, 900, 270, fill="#faedcd", outline="black")
 
-    item2 = tk.Label(menu2_p, text="Coffee", font=("Arial", 20), bg="#faedcd")
+    item2 = tk.Label(menu2_p, text="Sandwich", font=("Arial", 20), bg="#faedcd")
     btn2 = tk.Button(menu2_p, text="Customize", bg="#d4aa73", fg="white", font=("Arial", 20))
 
     canvas.create_window(700, 120, window=item2)
@@ -171,7 +171,7 @@ def menu_page2(old_window):
     # item 3
     canvas.create_rectangle(50, 300, 450, 530, fill="#faedcd", outline="black")
 
-    item3 = tk.Label(menu2_p, text="Macha", font=("Arial", 20),bg="#faedcd")
+    item3 = tk.Label(menu2_p, text="chocolate cake", font=("Arial", 20),bg="#faedcd")
     btn3 = tk.Button(menu2_p, text="Customize", bg="#d4aa73", fg="white", font=("Arial", 20))
 
     canvas.create_window(250, 370, window=item3) 
@@ -180,7 +180,7 @@ def menu_page2(old_window):
     # item 4
     canvas.create_rectangle(500, 300, 900, 530, fill="#faedcd", outline="black")
 
-    item4 = tk.Label(menu2_p, text="Tea", font=("Arial", 20), bg="#faedcd")
+    item4 = tk.Label(menu2_p, text="Muffin", font=("Arial", 20), bg="#faedcd")
     btn4 = tk.Button(menu2_p, text="Customize", bg="#d4aa73", fg="white", font=("Arial", 20))
 
     canvas.create_window(700, 370, window=item4)
@@ -197,7 +197,7 @@ def menu_page(old_window):
     menu_p.geometry("3000x2000")
     menu_p.configure(bg="#faedcd")
 
-    tk.Label(menu_p, text="𝓜𝓮𝓷𝓾 𝓟𝓪𝓰𝓮【１】", font=("Arial", 40), bg="#faedcd")\
+    tk.Label(menu_p, text="𝓜𝓮𝓷𝓾 𝓟𝓪𝓰𝓮【１】\n𝓓𝓻𝓲𝓷𝓴𝓼", font=("Arial", 40), bg="#faedcd")\
         .grid(row=0, column=0, columnspan=2, pady=20)
 
     canvas = tk.Canvas(menu_p, width=960, height=600, bg="#d4aa73")
