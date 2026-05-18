@@ -136,6 +136,39 @@ def view_order_page(old_window):
 view_order_p_enter = tk.Button(root, text="𝓥𝓲𝓮𝔀 𝓨𝓸𝓾𝓻 𝓞𝓻𝓭𝓮r", command=lambda: view_order_page(root),width=70, height=2, font=(30), fg="white", bg="#d4a373")
 view_order_p_enter.pack(pady=50)
 
+def customize_f_page(old_window):
+    old_window.withdraw()
+    custF_p = tk.Toplevel()
+    custF_p.title("Customize Page")
+    custF_p.geometry("3000x2000")
+    custF_p.configure(bg="#faedcd")
+
+    tk.Label(custF_p, text="𝓒𝓾𝓼𝓽𝓸𝓶𝓲𝔃𝓮 𝓟𝓪𝓰𝓮", font=("Arial", 40), bg="#faedcd")\
+        .grid(row=0, column=0, columnspan=2, pady=50, padx=200)
+    
+    toasted = tk.Button(custF_p, text="𝙏𝙤𝙖𝙨𝙩𝙚𝙙", font=(30), fg="black", bg="#d4a373",width=40, height=4)
+    toasted.place(x=100, y=200)
+    Ntoasted = tk.Button(custF_p, text="𝙉𝙤 𝙏𝙤𝙖𝙨𝙩𝙚𝙙", font=(30), fg="black", bg="#d4a373",width=40, height=4)
+    Ntoasted.place(x=600, y=200)
+
+    cheese = tk.Button(custF_p, text="𝘾𝙝𝙚𝙚𝙨𝙚", font=(30), fg="black", bg="#d4a373",width=40, height=4)
+    cheese.place(x=100, y=370)
+    Ncheese = tk.Button(custF_p, text="𝙉𝙤 𝘾𝙝𝙚𝙚𝙨𝙚", font=(30), fg="black", bg="#d4a373",width=40, height=4)
+    Ncheese.place(x=600, y=370)
+
+    Nsauce = tk.Button(custF_p, text="𝙉𝙤 𝙎𝙖𝙪𝙘𝙚", font=(25), fg="black", bg="#d4a373",width=20, height=4)
+    Nsauce.place(x=100, y=550)
+    sauce_b= tk.Button(custF_p, text="𝘽𝘽𝙌 𝙎𝙖𝙪𝙘𝙚", font=(25), fg="black", bg="#d4a373",width=20, height=4)
+    sauce_b.place(x=350, y=550)
+    sauce_t= tk.Button(custF_p, text="𝙏𝙤𝙢𝙖𝙩𝙤 𝙎𝙖𝙪𝙘𝙚", font=(25), fg="black", bg="#d4a373",width=20, height=4)
+    sauce_t.place(x=600, y=550)
+    sauce_w= tk.Button(custF_p, text="𝙒𝙝𝙞𝙩𝙚 𝙎𝙖𝙪𝙘𝙚", font=(25), fg="black", bg="#d4a373",width=20, height=4)
+    sauce_w.place(x=850, y=550)
+    sauce_m= tk.Button(custF_p, text="𝙈𝙖𝙮𝙤 𝙎𝙖𝙪𝙘𝙚", font=(25), fg="black", bg="#d4a373",width=20, height=4)
+    sauce_m.place(x=1100, y=550)
+
+    add_btn = tk.Button(custF_p, text="ADD ITEM", command=lambda: menu_page(custF_p),font=(30), bg="#d4a373")
+    add_btn.place(x=700, y=800)
 
 def menu_page2(old_window):
     old_window.withdraw()
@@ -207,7 +240,7 @@ def menu_page(old_window):
     canvas.create_rectangle(50, 50, 450, 270, fill="#faedcd", outline="black")
 
     item = tk.Label(menu_p, text="Hot chocolate", font=("Arial", 20),bg="#faedcd")
-    btn = tk.Button(menu_p, text="Customize", bg="#d4aa73", fg="white", font=("Arial", 20))
+    btn = tk.Button(menu_p, text="Customize", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_f_page(menu_p))
 
     canvas.create_window(250, 120, window=item) 
     canvas.create_window(250, 200, window=btn)
@@ -216,7 +249,7 @@ def menu_page(old_window):
     canvas.create_rectangle(500, 50, 900, 270, fill="#faedcd", outline="black")
 
     item2 = tk.Label(menu_p, text="Coffee", font=("Arial", 20), bg="#faedcd")
-    btn2 = tk.Button(menu_p, text="Customize", bg="#d4aa73", fg="white", font=("Arial", 20))
+    btn2 = tk.Button(menu_p, text="Customize", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_f_page(menu_p))
 
     canvas.create_window(700, 120, window=item2)
     canvas.create_window(700, 200, window=btn2)
@@ -225,7 +258,7 @@ def menu_page(old_window):
     canvas.create_rectangle(50, 300, 450, 530, fill="#faedcd", outline="black")
 
     item3 = tk.Label(menu_p, text="Macha", font=("Arial", 20),bg="#faedcd")
-    btn3 = tk.Button(menu_p, text="Customize", bg="#d4aa73", fg="white", font=("Arial", 20))
+    btn3 = tk.Button(menu_p, text="Customize", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_f_page(menu_p))
 
     canvas.create_window(250, 370, window=item3) 
     canvas.create_window(250, 450, window=btn3)
@@ -234,7 +267,7 @@ def menu_page(old_window):
     canvas.create_rectangle(500, 300, 900, 530, fill="#faedcd", outline="black")
 
     item4 = tk.Label(menu_p, text="Tea", font=("Arial", 20), bg="#faedcd")
-    btn4 = tk.Button(menu_p, text="Customize", bg="#d4aa73", fg="white", font=("Arial", 20))
+    btn4 = tk.Button(menu_p, text="Customize", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_f_page(menu_p))
 
     canvas.create_window(700, 370, window=item4)
     canvas.create_window(700, 450, window=btn4)
