@@ -63,8 +63,7 @@ def login_page(old_window):
         # Check saved accounts
         if user in accounts and accounts[user] == pwd:
             messagebox.showinfo("Login Success", f"Welcome, {user}!")
-            login_p.destroy()
-            menu_page()
+            menu_page(login_p)
         else:
             messagebox.showerror("Login Failed", "Invalid username or password")
 
@@ -75,7 +74,7 @@ def login_page(old_window):
     back_btn.grid(row=4, column=1, pady=10)
 
 login_p_enter = tk.Button(root, text="𝓛𝓸𝓰𝓲𝓷 𝓹𝓪𝓰𝓮", command=lambda: login_page(root),width=70, height=2, font=(30), fg="white", bg="#d4a373")
-login_p_enter.pack(pady=50)
+login_p_enter.pack(pady=70)
 
 
 # Sign up page function
@@ -112,6 +111,7 @@ def signup_page(old_window):
         # Save new account
         accounts[user] = pwd
         messagebox.showinfo("Success", "Account created successfully!")
+        
 
     signup_btn = tk.Button(signup_p, text="𝓢𝓲𝓰𝓷𝓾𝓹", command=signup,font=(30), bg="#d4a373")
     signup_btn.grid(row=3, column=1, pady=10)
@@ -119,7 +119,7 @@ def signup_page(old_window):
     back_btn.grid(row=4, column=1, pady=10)
 
 signup_p_enter = tk.Button(root, text="𝓢𝓲𝓰𝓷𝓾𝓹 𝓹𝓪𝓰𝓮", command=lambda: signup_page(root),width=70, height=2, font=(30), fg="white", bg="#d4a373")
-signup_p_enter.pack(pady=50)
+signup_p_enter.pack(pady=70)
 
 
 # View my order page 
@@ -146,11 +146,8 @@ def view_order_page(old_window):
         y += 30
 
         # Item name
-        if "food" in item:
-            canvas.create_text(100, y, text=item["food"], anchor="w",font=("Arial", 24), fill="black")
-            y += 35
-        if "drink" in item:
-            canvas.create_text(100, y, text=item["drink"], anchor="w",font=("Arial", 24), fill="black")
+        if "item" in item:
+            canvas.create_text(100, y, text=item["item"], anchor="w",font=("Arial", 24), fill="black")
             y += 35
 
         # Customizations
@@ -185,11 +182,8 @@ def view_order_page(old_window):
         canvas.create_text(100, y, text="-----------------------------", anchor="w",font=("Arial", 20), fill="black")
         y += 50    # gap between orders
 
-    tk.Button(order_window, text="GO PAY", command=lambda: payment_page(order_window),font=(30), bg="#d4a373").pack(pady=20)
-    tk.Button(order_window, text="BACK", command=lambda: main_page(order_window),font=(30), bg="#d4a373").pack(pady=20)
-
-view_order_p_enter = tk.Button(root, text="𝓥𝓲𝓮𝔀 𝓨𝓸𝓾𝓻 𝓞𝓻𝓭𝓮r", command=lambda: view_order_page(root),width=70, height=2, font=(30), fg="white", bg="#d4a373")
-view_order_p_enter.pack(pady=50)
+    tk.Button(order_window, text="𝙂𝙤 𝙋𝙖𝙮", command=lambda: payment_page(order_window),font=(30), bg="#d4a373").pack(pady=1)
+    tk.Button(order_window, text="𝘽𝙖𝙘𝙠", command=lambda: menu_page(order_window),font=(30), bg="#d4a373").pack(padx=20)
 
 # Payment page 
 def payment_page(old_window):
@@ -199,25 +193,41 @@ def payment_page(old_window):
     payment_p.geometry("3000x2000")
     payment_p.configure(bg="#faedcd")
 
-    tk.Label(payment_p, text="�𝓪𝔂𝓶�𝓷𝓽 𝓟𝓪𝓰𝓮", font=("Arial", 40), bg="#faedcd")\
+    tk.Label(payment_p, text="𝓟𝓪𝔂𝓶𝓮𝓷𝓽 𝓟𝓪𝓰𝓮", font=("Arial", 40), bg="#faedcd")\
         .grid(row=0, column=0, columnspan=2, pady=50, padx=200)
     
-    credit = tk.Button(payment_p, text="CREDIT", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Cold": "Yes"}),width=40, height=4)
+    credit = tk.Button(payment_p, text="𝘾𝙧𝙚𝙙𝙞𝙩", font=(30), fg="black", bg="#d4a373",width=40, height=4)
     credit.place(x=100, y=200)
-    cash = tk.Button(payment_p, text="CASH", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Hot": "Yes"}),width=40, height=4)
+    cash = tk.Button(payment_p, text="𝘾𝙖𝙨𝙝", font=(30), fg="black", bg="#d4a373",width=40, height=4)
     cash.place(x=600, y=200)
-    sc = tk.Button(payment_p, text="STUDENT CARD", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Hot": "Yes"}),width=40, height=4)
-    sc.place(x=1100, y=200)
+    sc = tk.Button(payment_p, text="𝙎𝙩𝙪𝙙𝙚𝙣𝙩 𝘾𝙖𝙧𝙙", font=(30), fg="black", bg="#d4a373",width=85, height=4)
+    sc.place(x=100, y=400)
+    tk.Label(payment_p, text="𝙎𝙩𝙪𝙙𝙚𝙣𝙩 𝘾𝙖𝙧𝙙 𝙉𝙪𝙢𝙗𝙚𝙧", font=("Arial", 20), bg="#faedcd").place(x=100, y=550)
+    username_entry = tk.Entry(payment_p, font=("Arial", 30), bg="#d4a373")
+    username_entry.place(x=100, y=600)
 
-    finish_btn = tk.Button(payment_p, text="FINISH", command=None,font=(30), bg="#d4a373")
+    finish_btn = tk.Button(payment_p, text="𝙁𝙞𝙣𝙞𝙨𝙝", command=lambda: finish_page(payment_p),font=(30), bg="#d4a373")   
     finish_btn.place(x=650, y=800)
-    back_btn = tk.Button(payment_p, text="BACK", command=None,font=(30), bg="#d4a373")
+    back_btn = tk.Button(payment_p, text="𝘽𝙖𝙘𝙠", command=lambda: menu_page(payment_p),font=(30), bg="#d4a373")
     back_btn.place(x=750, y=800)
 
+# Finish page
+def finish_page(old_window):
+    old_window.withdraw()
+    fin_p = tk.Toplevel()
+    fin_p.title("Finish Page")
+    fin_p.geometry("3000x2000")
+    fin_p.configure(bg="#faedcd")
+    label = tk.Label(fin_p, text="𝙏𝙝𝙖𝙣𝙠 𝙮𝙤𝙪 𝙛𝙤𝙧 𝙤𝙧𝙙𝙚𝙧, 𝙨𝙚𝙚 𝙮𝙤𝙪 𝙨𝙤𝙤𝙣!", font=("Arial", 50),bg="#faedcd")
+    label.pack(pady=20)
 
+    finish_btn = tk.Button(fin_p, text="𝙁𝙞𝙣𝙞𝙨𝙝", command=fin_p.destroy,font=(30), bg="#d4a373")       # destroy page
+    finish_btn.place(x=650, y=800)
+    backtomain_btn = tk.Button(fin_p, text="𝘽𝙖𝙘𝙠 𝙏𝙤 𝙈𝙖𝙞𝙣", command=lambda: main_page(fin_p),font=(30), bg="#d4a373")
+    backtomain_btn.place(x=750, y=800)
 
 # Customize page 
-def customize_d_page(old_window, drink_name="drink"):
+def customize_d_page(old_window, drink_name="item"):
     old_window.withdraw()       # hide the old window that user was in
     custd_p = tk.Toplevel()      # create window
     custd_p.title("Customize Page")
@@ -229,28 +239,28 @@ def customize_d_page(old_window, drink_name="drink"):
     
     # reset the customisation for each item
     global c_custom
-    c_custom = {"drink": drink_name}
+    c_custom = {"item": drink_name}
     
     cold = tk.Button(custd_p, text="𝘾𝙤𝙡𝙙", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Cold": "Yes"}),width=40, height=4)
     cold.place(x=100, y=200)
     hot = tk.Button(custd_p, text="𝙃𝙤𝙩", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Hot": "Yes"}),width=40, height=4)
     hot.place(x=600, y=200)
 
-    n_ice = tk.Button(custd_p, text="No ICE", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Ice": "No"}),width=30, height=4)
+    n_ice = tk.Button(custd_p, text="𝙉𝙤 𝙄𝘾𝙀", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Ice": "No"}),width=30, height=4)
     n_ice.place(x=100, y=370)
-    normal_ice = tk.Button(custd_p, text="NORMAL ICE", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Ice": "Normal"}),width=30, height=4)
+    normal_ice = tk.Button(custd_p, text="𝙉𝙤𝙧𝙢𝙖𝙡 𝙄𝘾𝙀", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Ice": "Normal"}),width=30, height=4)
     normal_ice.place(x=500, y=370)
-    extra_ice = tk.Button(custd_p, text="EXTRA ICE", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Ice": "Extra"}),width=30, height=4)
+    extra_ice = tk.Button(custd_p, text="𝙀𝙭𝙩𝙧𝙖 𝙄𝘾𝙀", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Ice": "Extra"}),width=30, height=4)
     extra_ice.place(x=900, y=370)
 
-    n_hot = tk.Button(custd_p, text="No HOT", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Hot": "No"}),width=30, height=4)
+    n_hot = tk.Button(custd_p, text="𝙉𝙤 𝙃𝙊𝙏", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Hot": "No"}),width=30, height=4)
     n_hot.place(x=100, y=550)
-    normal_hot = tk.Button(custd_p, text="NORMAL HOT", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Hot": "Normal"}),width=30, height=4)
+    normal_hot = tk.Button(custd_p, text="𝙉𝙤𝙧𝙢𝙖𝙡 𝙃𝙊𝙏", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Hot": "Normal"}),width=30, height=4)
     normal_hot.place(x=500, y=550)
-    extra_hot = tk.Button(custd_p, text="EXTRA HOT", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Hot": "Extra"}),width=30, height=4)
+    extra_hot = tk.Button(custd_p, text="𝙀𝙭𝙩𝙧𝙖 𝙃𝙊𝙏", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Hot": "Extra"}),width=30, height=4)
     extra_hot.place(x=900, y=550)
 
-    add_btn = tk.Button(custd_p, text="Extra shot (+$1.00)", command=lambda: c_custom.update({"Extra Shot": "Yes"}),font=(15), bg="#d4a373")
+    add_btn = tk.Button(custd_p, text="𝙀𝙭𝙩𝙧𝙖 𝙨𝙝𝙤𝙩 (+$1.00)", command=lambda: c_custom.update({"Extra Shot": "Yes"}),font=(15), bg="#d4a373")
     add_btn.place(x=660, y=700)
     
     # save item system
@@ -265,10 +275,10 @@ def customize_d_page(old_window, drink_name="drink"):
         messagebox.showinfo("Saved", f"Item added! Order #{order_num}")
         menu_page(custd_p)
 
-    add_btn = tk.Button(custd_p, text="ADD ITEM", command=save_item,font=(30), bg="#d4a373")
+    add_btn = tk.Button(custd_p, text="𝘼𝙙𝙙 𝙄𝙩𝙚𝙢", command=save_item,font=(30), bg="#d4a373")
     add_btn.place(x=700, y=800)
 
-def customize_f_page(old_window, food_name="Food"):
+def customize_f_page(old_window, food_name="item"):
     old_window.withdraw()       # hide the old window that user was in
     custF_p = tk.Toplevel()      # create window    
     custF_p.title("Customize Page")
@@ -280,7 +290,7 @@ def customize_f_page(old_window, food_name="Food"):
     
     #reset the customisation for each item
     global c_custom
-    c_custom = {"Food": food_name}
+    c_custom = {"item": food_name}
     
     toasted = tk.Button(custF_p, text="𝙏𝙤𝙖𝙨𝙩𝙚𝙙", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Toasted": "Yes"}),width=40, height=4)
     toasted.place(x=100, y=200)
@@ -314,7 +324,7 @@ def customize_f_page(old_window, food_name="Food"):
         messagebox.showinfo("Saved", "Item added to your order!")
         menu_page(custF_p)
 
-    add_btn = tk.Button(custF_p, text="ADD ITEM", command=save_item,font=(30), bg="#d4a373")
+    add_btn = tk.Button(custF_p, text="𝘼𝙙𝙙 𝙄𝙩𝙚𝙢", command=save_item,font=(30), bg="#d4a373")
     add_btn.place(x=700, y=800)
 
 # Menu page 2(food)
@@ -334,8 +344,8 @@ def menu_page2(old_window):
     # item 1
     canvas.create_rectangle(50, 50, 450, 270, fill="#faedcd", outline="black")
 
-    item = tk.Label(menu2_p, text="Burger", font=("Arial", 20),bg="#faedcd")
-    btn = tk.Button(menu2_p, text="Customize", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_f_page(menu2_p))
+    item = tk.Label(menu2_p, text="𝘽𝙪𝙧𝙜𝙚𝙧", font=("Arial", 20),bg="#faedcd")
+    btn = tk.Button(menu2_p, text="𝘾𝙪𝙨𝙩𝙤𝙢𝙞𝙯𝙚", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_f_page(menu2_p,"𝘽𝙪𝙧𝙜𝙚𝙧"))
 
     canvas.create_window(250, 120, window=item) 
     canvas.create_window(250, 200, window=btn)
@@ -343,8 +353,8 @@ def menu_page2(old_window):
     # item 2
     canvas.create_rectangle(500, 50, 900, 270, fill="#faedcd", outline="black")
 
-    item2 = tk.Label(menu2_p, text="Sandwich", font=("Arial", 20), bg="#faedcd")
-    btn2 = tk.Button(menu2_p, text="Customize", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_f_page(menu2_p))
+    item2 = tk.Label(menu2_p, text="𝙎𝙖𝙣𝙙𝙬𝙞𝙘𝙝", font=("Arial", 20), bg="#faedcd")
+    btn2 = tk.Button(menu2_p, text="𝘾𝙪𝙨𝙩𝙤𝙢𝙞𝙯𝙚", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_f_page(menu2_p,"𝙎𝙖𝙣𝙙𝙬𝙞𝙘𝙝"))
 
     canvas.create_window(700, 120, window=item2)
     canvas.create_window(700, 200, window=btn2)
@@ -352,8 +362,8 @@ def menu_page2(old_window):
     # item 3
     canvas.create_rectangle(50, 300, 450, 530, fill="#faedcd", outline="black")
 
-    item3 = tk.Label(menu2_p, text="chocolate cake", font=("Arial", 20),bg="#faedcd")
-    btn3 = tk.Button(menu2_p, text="Customize", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_f_page(menu2_p))
+    item3 = tk.Label(menu2_p, text="𝙘𝙝𝙤𝙘𝙤𝙡𝙖𝙩𝙚 𝙘𝙖𝙠𝙚", font=("Arial", 20),bg="#faedcd")
+    btn3 = tk.Button(menu2_p, text="𝘾𝙪𝙨𝙩𝙤𝙢𝙞𝙯𝙚", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_f_page(menu2_p,"𝙘𝙝𝙤𝙘𝙤𝙡𝙖𝙩𝙚 𝙘𝙖𝙠𝙚"))
 
     canvas.create_window(250, 370, window=item3) 
     canvas.create_window(250, 450, window=btn3)
@@ -361,15 +371,15 @@ def menu_page2(old_window):
     # item 4
     canvas.create_rectangle(500, 300, 900, 530, fill="#faedcd", outline="black")
 
-    item4 = tk.Label(menu2_p, text="Muffin", font=("Arial", 20), bg="#faedcd")
-    btn4 = tk.Button(menu2_p, text="Customize", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_f_page(menu2_p))
+    item4 = tk.Label(menu2_p, text="𝙈𝙪𝙛𝙛𝙞𝙣", font=("Arial", 20), bg="#faedcd")
+    btn4 = tk.Button(menu2_p, text="𝘾𝙪𝙨𝙩𝙤𝙢𝙞𝙯𝙚", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_f_page(menu2_p,"𝙈𝙪𝙛𝙛𝙞𝙣"))
 
     canvas.create_window(700, 370, window=item4)
     canvas.create_window(700, 450, window=btn4)
 
     back_btn = tk.Button(menu2_p, text="<", command=lambda: menu_page(menu2_p),font=(40), bg="#d4a373")
     back_btn.place(x=100, y=400)
-    vop_btn = tk.Button(menu2_p, text="VIEW ORDER", command=lambda: view_order_page(menu2_p),font=(30), bg="#d4a373")
+    vop_btn = tk.Button(menu2_p, text="𝙑𝙄𝙀𝙒 𝙊𝙍𝘿𝙀𝙍", command=lambda: view_order_page(menu2_p),font=(30), bg="#d4a373")
     vop_btn.place(x=670, y=825)
 
 # Menu page 1(drink)
@@ -389,8 +399,8 @@ def menu_page(old_window):
     # item 1
     canvas.create_rectangle(50, 50, 450, 270, fill="#faedcd", outline="black")
 
-    item = tk.Label(menu_p, text="Hot chocolate", font=("Arial", 20),bg="#faedcd")
-    btn = tk.Button(menu_p, text="Customize", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_d_page(menu_p))
+    item = tk.Label(menu_p, text="𝙃𝙤𝙩 𝘾𝙝𝙤𝙘𝙤𝙡𝙖𝙩𝙚", font=("Arial", 20),bg="#faedcd")
+    btn = tk.Button(menu_p, text="𝘾𝙪𝙨𝙩𝙤𝙢𝙞𝙯𝙚", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_d_page(menu_p, "𝙃𝙤𝙩 𝘾𝙝𝙤𝙘𝙤𝙡𝙖𝙩𝙚"))
 
     canvas.create_window(250, 120, window=item) 
     canvas.create_window(250, 200, window=btn)
@@ -398,8 +408,8 @@ def menu_page(old_window):
     # item 2
     canvas.create_rectangle(500, 50, 900, 270, fill="#faedcd", outline="black")
 
-    item2 = tk.Label(menu_p, text="Coffee", font=("Arial", 20), bg="#faedcd")
-    btn2 = tk.Button(menu_p, text="Customize", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_d_page(menu_p))
+    item2 = tk.Label(menu_p, text="𝘾𝙤𝙛𝙛𝙚𝙚", font=("Arial", 20), bg="#faedcd")
+    btn2 = tk.Button(menu_p, text="𝘾𝙪𝙨𝙩𝙤𝙢𝙞𝙯𝙚", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_d_page(menu_p, "𝘾𝙤𝙛𝙛𝙚𝙚"))
 
     canvas.create_window(700, 120, window=item2)
     canvas.create_window(700, 200, window=btn2)
@@ -407,8 +417,8 @@ def menu_page(old_window):
     # item 3
     canvas.create_rectangle(50, 300, 450, 530, fill="#faedcd", outline="black")
 
-    item3 = tk.Label(menu_p, text="Macha", font=("Arial", 20),bg="#faedcd")
-    btn3 = tk.Button(menu_p, text="Customize", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_d_page(menu_p))
+    item3 = tk.Label(menu_p, text="𝙈𝙖𝙘𝙝𝙖", font=("Arial", 20),bg="#faedcd")
+    btn3 = tk.Button(menu_p, text="𝘾𝙪𝙨𝙩𝙤𝙢𝙞𝙯𝙚", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_d_page(menu_p, "𝙈𝙖𝙘𝙝𝙖"))
 
     canvas.create_window(250, 370, window=item3) 
     canvas.create_window(250, 450, window=btn3)
@@ -416,8 +426,8 @@ def menu_page(old_window):
     # item 4
     canvas.create_rectangle(500, 300, 900, 530, fill="#faedcd", outline="black")
 
-    item4 = tk.Label(menu_p, text="Tea", font=("Arial", 20), bg="#faedcd")
-    btn4 = tk.Button(menu_p, text="Customize", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_d_page(menu_p))
+    item4 = tk.Label(menu_p, text="𝙏𝙚𝙖", font=("Arial", 20), bg="#faedcd")
+    btn4 = tk.Button(menu_p, text="𝘾𝙪𝙨𝙩𝙤𝙢𝙞𝙯𝙚", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_d_page(menu_p, "𝙏𝙚𝙖"))
 
     canvas.create_window(700, 370, window=item4)
     canvas.create_window(700, 450, window=btn4)
@@ -426,7 +436,7 @@ def menu_page(old_window):
     back_btn.place(x=100, y=400)
     next_btn = tk.Button(menu_p, text=">", command=lambda: menu_page2(menu_p),font=(40), bg="#d4a373")
     next_btn.place(x=1350, y=400)
-    vop_btn = tk.Button(menu_p, text="VIEW ORDER", command=lambda: view_order_page(menu_p),font=(30), bg="#d4a373")
+    vop_btn = tk.Button(menu_p, text="𝙑𝙄𝙀𝙒 𝙊𝙍𝘿𝙀𝙍", command=lambda: view_order_page(menu_p),font=(30), bg="#d4a373")
     vop_btn.place(x=670, y=825)
 
     
@@ -441,17 +451,9 @@ def main_page(old_window):
     label.pack(pady=20)
     
     login_p_enter2 = tk.Button(main_p, text="𝓛𝓸𝓰𝓲𝓷 𝓹𝓪𝓰𝓮", command=lambda: login_page(main_p),width=70, height=2, font=(30), fg="white", bg="#d4a373")
-    login_p_enter2.pack(pady=50)
+    login_p_enter2.pack(pady=70)
     signup_p_enter2 = tk.Button(main_p, text="𝓢𝓲𝓰𝓷𝓾𝓹 𝓹𝓪𝓰𝓮", command=lambda: signup_page(main_p),width=70, height=2, font=(30), fg="white", bg="#d4a373")
-    signup_p_enter2.pack(pady=50)
-    view_order_p_enter2 = tk.Button(main_p, text="𝓥𝓲𝓮𝔀 𝓨𝓸𝓾𝓻 𝓞𝓻𝓭𝓮r", command=lambda: view_order_page(main_p),width=70, height=2, font=(30), fg="white", bg="#d4a373")
-    view_order_p_enter2.pack(pady=50)
-    menu_p_enter2 = tk.Button(main_p, text="𝓜𝓮𝓷𝓾", command=lambda: menu_page(main_p),width=70, height=2, font=(30), fg="white", bg="#d4a373")
-    menu_p_enter2.pack(pady=50)
-
-menu_p_enter = tk.Button(root, text="𝓜𝓮𝓷𝓾", command=lambda: menu_page(root),width=70, height=2, font=(30), fg="white", bg="#d4a373")
-menu_p_enter.pack(pady=50)
-
+    signup_p_enter2.pack(pady=70)
 
 # Start the loop
 if __name__ == "__main__":
