@@ -141,43 +141,43 @@ def view_order_page(old_window):
 
         # Order number
         canvas.create_text(100, y, text=f"Order #{item['Order Number']}", anchor="w",font=("Arial", 28, "bold"), fill="black")
-        y += 40
+        y += 40 # gap between each text
         canvas.create_text(100, y, text="-----------------------------", anchor="w",font=("Arial", 20), fill="black")
-        y += 30
+        y += 30 # gap between each text
 
         # Item name
         if "item" in item:
             canvas.create_text(100, y, text=item["item"], anchor="w",font=("Arial", 24), fill="black")
-            y += 35
+            y += 35     # gap between each text
 
         # Customizations
         if "Cold" in item:
             canvas.create_text(120, y, text=f"Cold: {item['Cold']}", anchor="w", font=("Arial", 20))
-            y += 30
+            y += 30     # gap between each text
 
         if "Hot" in item:
             canvas.create_text(120, y, text=f"Hot: {item['Hot']}", anchor="w", font=("Arial", 20))
-            y += 30
+            y += 30     # gap between each text
 
         if "Ice" in item:
             canvas.create_text(120, y, text=f"Ice: {item['Ice']}", anchor="w", font=("Arial", 20))
-            y += 30
+            y += 30     # gap between each text
 
         if "Extra Shot" in item:
             canvas.create_text(120, y, text=f"Extra Shot: {item['Extra Shot']}", anchor="w", font=("Arial", 20))
-            y += 30
+            y += 30     # gap between each text
 
         if "Toasted" in item:
             canvas.create_text(120, y, text=f"Toasted: {item['Toasted']}", anchor="w", font=("Arial", 20))
-            y += 30
+            y += 30     # gap between each text
 
         if "Cheese" in item:
             canvas.create_text(120, y, text=f"Cheese: {item['Cheese']}", anchor="w", font=("Arial", 20))
-            y += 30
+            y += 30     # gap between each text
 
         if "Sauce" in item:
             canvas.create_text(120, y, text=f"Sauce: {item['Sauce']}", anchor="w", font=("Arial", 20))
-            y += 30
+            y += 30     # gap between each text
 
         canvas.create_text(100, y, text="-----------------------------", anchor="w",font=("Arial", 20), fill="black")
         y += 50    # gap between orders
