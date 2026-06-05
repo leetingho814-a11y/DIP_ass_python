@@ -8,6 +8,7 @@
 # Credits: 
 # https://lingojam.com/FancyTextGenerator (for the special text)
 # https://docs.python.org/3/library/random.html (for random number)
+# https://emojipedia.org/wastebasket (for rubblish bin emoji)
 
 
 
@@ -195,17 +196,17 @@ def payment_page(old_window):
     payment_p.geometry("3000x2000")
     payment_p.configure(bg="#faedcd")
 
-    def credit_select():
+    def credit_select():            # color changed
         credit.config(bg="#ffffff")
         cash.config(bg="#d4a373")
         sc.config(bg="#d4a373")
 
-    def cash_select():
+    def cash_select():              # color changed
         credit.config(bg="#d4a373")
         cash.config(bg="#ffffff")
         sc.config(bg="#d4a373")
 
-    def sc_select():
+    def sc_select():                # color changed
         credit.config(bg="#d4a373")
         cash.config(bg="#d4a373")
         sc.config(bg="#ffffff")
@@ -236,7 +237,7 @@ def finish_page(old_window):
     fin_p.geometry("3000x2000")
     fin_p.configure(bg="#faedcd")
     label = tk.Label(fin_p, text="𝙏𝙝𝙖𝙣𝙠 𝙮𝙤𝙪 𝙛𝙤𝙧 𝙤𝙧𝙙𝙚𝙧, 𝙨𝙚𝙚 𝙮𝙤𝙪 𝙨𝙤𝙤𝙣!", font=("Arial", 50),bg="#faedcd")
-    label.pack(pady=20)
+    label.pack(pady=120)
 
     finish_btn = tk.Button(fin_p, text="𝙁𝙞𝙣𝙞𝙨𝙝", command=fin_p.destroy,font=(30), bg="#d4a373")       # destroy page
     finish_btn.place(x=650, y=800)
@@ -257,28 +258,89 @@ def customize_d_page(old_window, drink_name="item"):
     # reset the customisation for each item
     global c_custom
     c_custom = {"item": drink_name}
+
+    def cold_select():            # color changed
+        cold.config(bg="#ffffff")
+        hot.config(bg="#d4a373")
+
+    def hot_select():              # color changed
+        cold.config(bg="#d4a373")
+        hot.config(bg="#ffffff")
     
-    cold = tk.Button(custd_p, text="𝘾𝙤𝙡𝙙", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Cold": "Yes"}),width=40, height=4)
+    cold = tk.Button(custd_p, text="𝘾𝙤𝙡𝙙", font=(30), fg="black", bg="#d4a373",command=lambda: (c_custom.update({"Cold": "Yes"}),cold_select()),width=40, height=4)
     cold.place(x=100, y=200)
-    hot = tk.Button(custd_p, text="𝙃𝙤𝙩", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Hot": "Yes"}),width=40, height=4)
+    hot = tk.Button(custd_p, text="𝙃𝙤𝙩", font=(30), fg="black", bg="#d4a373",command=lambda: (c_custom.update({"Hot": "Yes"}),hot_select()),width=40, height=4)
     hot.place(x=600, y=200)
 
-    n_ice = tk.Button(custd_p, text="𝙉𝙤 𝙄𝘾𝙀", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Ice": "No"}),width=30, height=4)
+    def n_ice_select():            # color changed
+        n_ice.config(bg="#ffffff")
+        normal_ice.config(bg="#d4a373")
+        extra_ice.config(bg="#d4a373")
+
+    def nor_ice_select():              # color changed
+        n_ice.config(bg="#d4a373")
+        normal_ice.config(bg="#ffffff")
+        extra_ice.config(bg="#d4a373")
+
+    def ext_ice_select():              # color changed
+        n_ice.config(bg="#d4a373")
+        normal_ice.config(bg="#d4a373")
+        extra_ice.config(bg="#ffffff")
+
+    n_ice = tk.Button(custd_p, text="𝙉𝙤 𝙄𝘾𝙀", font=(30), fg="black", bg="#d4a373",command=lambda: (c_custom.update({"Ice": "No"}), n_ice_select()),width=30, height=4)
     n_ice.place(x=100, y=370)
-    normal_ice = tk.Button(custd_p, text="𝙉𝙤𝙧𝙢𝙖𝙡 𝙄𝘾𝙀", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Ice": "Normal"}),width=30, height=4)
+    normal_ice = tk.Button(custd_p, text="𝙉𝙤𝙧𝙢𝙖𝙡 𝙄𝘾𝙀", font=(30), fg="black", bg="#d4a373",command=lambda: (c_custom.update({"Ice": "Normal"}), nor_ice_select()),width=30, height=4)
     normal_ice.place(x=500, y=370)
-    extra_ice = tk.Button(custd_p, text="𝙀𝙭𝙩𝙧𝙖 𝙄𝘾𝙀", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Ice": "Extra"}),width=30, height=4)
+    extra_ice = tk.Button(custd_p, text="𝙀𝙭𝙩𝙧𝙖 𝙄𝘾𝙀", font=(30), fg="black", bg="#d4a373",command=lambda: (c_custom.update({"Ice": "Extra"}), ext_ice_select()),width=30, height=4)
     extra_ice.place(x=900, y=370)
 
-    n_hot = tk.Button(custd_p, text="𝙉𝙤 𝙃𝙊𝙏", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Hot": "No"}),width=30, height=4)
+    def n_hot_select():            # color changed
+        n_hot.config(bg="#ffffff")
+        normal_hot.config(bg="#d4a373")
+        extra_hot.config(bg="#d4a373")
+
+    def nor_hot_select():              # color changed
+        n_hot.config(bg="#d4a373")
+        normal_hot.config(bg="#ffffff")
+        extra_hot.config(bg="#d4a373")
+
+    def ext_hot_select():              # color changed
+        n_hot.config(bg="#d4a373")
+        normal_hot.config(bg="#d4a373")
+        extra_hot.config(bg="#ffffff")
+
+    n_hot = tk.Button(custd_p, text="𝙉𝙤 𝙃𝙊𝙏", font=(30), fg="black", bg="#d4a373",command=lambda: (c_custom.update({"Hot": "No"}), n_hot_select()),width=30, height=4)
     n_hot.place(x=100, y=550)
-    normal_hot = tk.Button(custd_p, text="𝙉𝙤𝙧𝙢𝙖𝙡 𝙃𝙊𝙏", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Hot": "Normal"}),width=30, height=4)
+    normal_hot = tk.Button(custd_p, text="𝙉𝙤𝙧𝙢𝙖𝙡 𝙃𝙊𝙏", font=(30), fg="black", bg="#d4a373",command=lambda: (c_custom.update({"Hot": "Normal"}), nor_hot_select()),width=30, height=4)
     normal_hot.place(x=500, y=550)
-    extra_hot = tk.Button(custd_p, text="𝙀𝙭𝙩𝙧𝙖 𝙃𝙊𝙏", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Hot": "Extra"}),width=30, height=4)
+    extra_hot = tk.Button(custd_p, text="𝙀𝙭𝙩𝙧𝙖 𝙃𝙊𝙏", font=(30), fg="black", bg="#d4a373",command=lambda: (c_custom.update({"Hot": "Extra"}), ext_hot_select()),width=30, height=4)
     extra_hot.place(x=900, y=550)
 
-    add_btn = tk.Button(custd_p, text="𝙀𝙭𝙩𝙧𝙖 𝙨𝙝𝙤𝙩 (+$1.00)", command=lambda: c_custom.update({"Extra Shot": "Yes"}),font=(15), bg="#d4a373")
-    add_btn.place(x=660, y=700)
+    def ext_shot_select():              # color changed
+        ext_btn.config(bg="#ffffff")
+    ext_btn = tk.Button(custd_p, text="𝙀𝙭𝙩𝙧𝙖 𝙨𝙝𝙤𝙩 (+$1.00)", command=lambda: (c_custom.update({"Extra Shot": "Yes"}), ext_shot_select()),font=(15), bg="#d4a373")
+    ext_btn.place(x=660, y=700)
+
+    def resetd_select():              # color changed
+        # Reset all customizations to their default values
+        c_custom.update({
+            "cold": "No",
+            "Hot": "No",
+            "Ice": "No",
+            "Extra Shot": "No",
+        })
+        cold.config(bg="#d4a373")
+        hot.config(bg="#d4a373")
+        n_ice.config(bg="#d4a373")
+        normal_ice.config(bg="#d4a373")
+        extra_ice.config(bg="#d4a373")
+        n_hot.config(bg="#d4a373")
+        normal_hot.config(bg="#d4a373")
+        extra_hot.config(bg="#d4a373")
+        ext_btn.config(bg="#d4a373")
+
+    reset_btn = tk.Button(custd_p, text="🗑️", command=lambda: resetd_select(),font=(15), bg="#d4a373")
+    reset_btn.place(x=860, y=700)
     
     # save item system
     def save_item():
@@ -308,27 +370,97 @@ def customize_f_page(old_window, food_name="item"):
     #reset the customisation for each item
     global c_custom
     c_custom = {"item": food_name}
+
+    def toasted_select():            # color changed
+        toasted.config(bg="#ffffff")
+        Ntoasted.config(bg="#d4a373")
+
+    def Ntoasted_select():              # color changed
+        toasted.config(bg="#d4a373")
+        Ntoasted.config(bg="#ffffff")
     
-    toasted = tk.Button(custF_p, text="𝙏𝙤𝙖𝙨𝙩𝙚𝙙", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Toasted": "Yes"}),width=40, height=4)
+    toasted = tk.Button(custF_p, text="𝙏𝙤𝙖𝙨𝙩𝙚𝙙", font=(30), fg="black", bg="#d4a373",command=lambda: (c_custom.update({"Toasted": "Yes"}),toasted_select()),width=40, height=4)
     toasted.place(x=100, y=200)
-    Ntoasted = tk.Button(custF_p, text="𝙉𝙤 𝙏𝙤𝙖𝙨𝙩𝙚𝙙", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Toasted": "No"}),width=40, height=4)
+    Ntoasted = tk.Button(custF_p, text="𝙉𝙤 𝙏𝙤𝙖𝙨𝙩𝙚𝙙", font=(30), fg="black", bg="#d4a373",command=lambda: (c_custom.update({"Toasted": "No"}),Ntoasted_select()),width=40, height=4)
     Ntoasted.place(x=600, y=200)
 
-    cheese = tk.Button(custF_p, text="𝘾𝙝𝙚𝙚𝙨𝙚", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Cheese": "Yes"}),width=40, height=4)
+    def cheese_select():            # color changed
+        cheese.config(bg="#ffffff")
+        Ncheese.config(bg="#d4a373")
+
+    def Ncheese_select():              # color changed
+        cheese.config(bg="#d4a373")
+        Ncheese.config(bg="#ffffff")
+
+    cheese = tk.Button(custF_p, text="𝘾𝙝𝙚𝙚𝙨𝙚", font=(30), fg="black", bg="#d4a373",command=lambda: (c_custom.update({"Cheese": "Yes"}),cheese_select()),width=40, height=4)
     cheese.place(x=100, y=370)
-    Ncheese = tk.Button(custF_p, text="𝙉𝙤 𝘾𝙝𝙚𝙚𝙨𝙚", font=(30), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Cheese": "No"}),width=40, height=4)
+    Ncheese = tk.Button(custF_p, text="𝙉𝙤 𝘾𝙝𝙚𝙚𝙨𝙚", font=(30), fg="black", bg="#d4a373",command=lambda: (c_custom.update({"Cheese": "No"}),Ncheese_select()),width=40, height=4)
     Ncheese.place(x=600, y=370)
 
-    Nsauce = tk.Button(custF_p, text="𝙉𝙤 𝙎𝙖𝙪𝙘𝙚", font=(25), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Sauce": "No"}),width=20, height=4)
+    def Nsauce_select():            # color changed
+        Nsauce.config(bg="#ffffff")
+        sauce_b.config(bg="#d4a373")
+        sauce_t.config(bg="#d4a373")
+        sauce_w.config(bg="#d4a373")
+        sauce_m.config(bg="#d4a373")
+
+    def sauceb_select():              # color changed
+        Nsauce.config(bg="#d4a373")
+        sauce_b.config(bg="#ffffff")
+        sauce_t.config(bg="#d4a373")
+        sauce_w.config(bg="#d4a373")
+        sauce_m.config(bg="#d4a373")
+
+    def sauce_t_select():            # color changed
+        sauce_t.config(bg="#ffffff")
+        Nsauce.config(bg="#d4a373")
+        sauce_b.config(bg="#d4a373")
+        sauce_w.config(bg="#d4a373")
+        sauce_m.config(bg="#d4a373")
+
+    def saucew_select():              # color changed
+        Nsauce.config(bg="#d4a373")
+        sauce_b.config(bg="#d4a373")
+        sauce_t.config(bg="#d4a373")
+        sauce_w.config(bg="#ffffff")
+        sauce_m.config(bg="#d4a373")
+
+    def saucem_select():              # color changed
+        Nsauce.config(bg="#d4a373")
+        sauce_b.config(bg="#d4a373")
+        sauce_t.config(bg="#d4a373")
+        sauce_w.config(bg="#d4a373")
+        sauce_m.config(bg="#ffffff")
+
+    Nsauce = tk.Button(custF_p, text="𝙉𝙤 𝙎𝙖𝙪𝙘𝙚", font=(25), fg="black", bg="#d4a373",command=lambda: (c_custom.update({"Sauce": "No"}),Nsauce_select()),width=20, height=4)
     Nsauce.place(x=100, y=550)
-    sauce_b= tk.Button(custF_p, text="𝘽𝘽𝙌 𝙎𝙖𝙪𝙘𝙚", font=(25), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Sauce": "BBQ"}),width=20, height=4)
+    sauce_b= tk.Button(custF_p, text="𝘽𝘽𝙌 𝙎𝙖𝙪𝙘𝙚", font=(25), fg="black", bg="#d4a373",command=lambda: (c_custom.update({"Sauce": "BBQ"}),sauceb_select()),width=20, height=4)
     sauce_b.place(x=350, y=550)
-    sauce_t= tk.Button(custF_p, text="𝙏𝙤𝙢𝙖𝙩𝙤 𝙎𝙖𝙪𝙘𝙚", font=(25), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Sauce": "Tomato"}),width=20, height=4)
+    sauce_t= tk.Button(custF_p, text="𝙏𝙤𝙢𝙖𝙩𝙤 𝙎𝙖𝙪𝙘𝙚", font=(25), fg="black", bg="#d4a373",command=lambda: (c_custom.update({"Sauce": "Tomato"}),sauce_t_select()),width=20, height=4)
     sauce_t.place(x=600, y=550)
-    sauce_w= tk.Button(custF_p, text="𝙒𝙝𝙞𝙩𝙚 𝙎𝙖𝙪𝙘𝙚", font=(25), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Sauce": "White"}),width=20, height=4)
+    sauce_w= tk.Button(custF_p, text="𝘽𝙡𝙖𝙘𝙠 𝙥𝙚𝙥𝙥𝙚𝙧 𝙎𝙖𝙪𝙘𝙚", font=(25), fg="black", bg="#d4a373",command=lambda: (c_custom.update({"Sauce": "White"}),saucew_select()),width=20, height=4)
     sauce_w.place(x=850, y=550)
-    sauce_m= tk.Button(custF_p, text="𝙈𝙖𝙮𝙤 𝙎𝙖𝙪𝙘𝙚", font=(25), fg="black", bg="#d4a373",command=lambda: c_custom.update({"Sauce": "Mayo"}),width=20, height=4)
+    sauce_m= tk.Button(custF_p, text="𝙈𝙖y𝙤 𝙎𝙖𝙪𝙘𝙚", font=(25), fg="black", bg="#d4a373",command=lambda: (c_custom.update({"Sauce": "Mayo"}),saucem_select()),width=20, height=4)
     sauce_m.place(x=1100, y=550)
+
+    def resetf_select():
+        # Reset all customizations to their default values
+        c_custom.update({
+            "Toasted": "No",
+            "Cheese": "No",
+            "Sauce": "No",
+        })
+        toasted.config(bg="#d4a373")
+        Ntoasted.config(bg="#d4a373")
+        cheese.config(bg="#d4a373")
+        Ncheese.config(bg="#d4a373")
+        Nsauce.config(bg="#d4a373")
+        sauce_b.config(bg="#d4a373")
+        sauce_t.config(bg="#d4a373")
+        sauce_w.config(bg="#d4a373")
+        sauce_m.config(bg="#d4a373")
+    reset_btn = tk.Button(custF_p, text="🗑️", command=lambda: resetf_select(),font=(15), bg="#d4a373")
+    reset_btn.place(x=700, y=700)
 
     # save item system
     def save_item():
