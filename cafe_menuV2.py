@@ -9,11 +9,11 @@
 # https://lingojam.com/FancyTextGenerator (for the special text)
 # https://docs.python.org/3/library/random.html (for random number)
 # https://emojipedia.org/wastebasket (for rubblish bin emoji)
-
+# https://www.w3schools.com/python/ref_string_isdigit.asp (for isdigit)
+# https://carpedm20.github.io/emoji/ (for eye emoji)
 
 
 #importing libraries
-import math
 import tkinter as tk
 from tkinter import messagebox
 import random
@@ -55,6 +55,13 @@ def login_page(old_window):
     password_entry = tk.Entry(login_p, font=("Arial", 30), show="*", bg="#d4a373")
     password_entry.grid(row=2, column=1, padx=20)
 
+    # Show Password system
+    def show_ps():
+        if password_entry.cget("show") == "":       # check is the password is showing or not
+            password_entry.config(show="*")
+        else:
+            password_entry.config(show="")
+    
     #login system
     def login():
         user = username_entry.get()     # get the username inputed
@@ -63,12 +70,12 @@ def login_page(old_window):
         # Check saved accounts
         if user in accounts and accounts[user] == pwd:
             messagebox.showinfo("Login Success", f"Welcome, {user}!")
-            login_p.destroy()
-            menu_page()
+            menu_page(login_p)
         else:
             messagebox.showerror("Login Failed", "Invalid username or password")
 
-    
+    eye_btn = tk.Button(login_p, text="👁", command=lambda: show_ps(),font=(30), bg="#d4a373")
+    eye_btn.grid(row=2, column=2, pady=10)
     login_btn = tk.Button(login_p, text="𝓛𝓸𝓰𝓲𝓷", command=login,font=(30), bg="#d4a373",)
     login_btn.grid(row=3, column=1, pady=10)
     back_btn = tk.Button(login_p, text="𝘽𝙖𝙘𝙠", command=lambda: main_page(login_p),font=(30), bg="#d4a373")
@@ -99,6 +106,13 @@ def signup_page(old_window):
     password_entry = tk.Entry(signup_p, font=("Arial", 30), show="*", bg="#d4a373")
     password_entry.grid(row=2, column=1, padx=20)
 
+    # Show Password system
+    def show_ps():
+        if password_entry.cget("show") == "":       # check is the password is showing or not
+            password_entry.config(show="*")
+        else:
+            password_entry.config(show="")
+    
     # signup system
     def signup():
         user = username_entry.get()
@@ -111,8 +125,11 @@ def signup_page(old_window):
 
         # Save new account
         accounts[user] = pwd
-        messagebox.showinfo("Success", "Account created successfully!")
+        messagebox.showinfo("Success", "Account created successfully! Hopping to login page...")
+        login_page(signup_p)
 
+    eye_btn = tk.Button(signup_p, text="👁", command=lambda: show_ps(),font=(30), bg="#d4a373")
+    eye_btn.grid(row=2, column=2, pady=10)
     signup_btn = tk.Button(signup_p, text="𝓢𝓲𝓰𝓷𝓾𝓹", command=signup,font=(30), bg="#d4a373")
     signup_btn.grid(row=3, column=1, pady=10)
     back_btn = tk.Button(signup_p, text="𝘽𝙖𝙘𝙠", command=lambda: main_page(signup_p),font=(30), bg="#d4a373")
@@ -147,9 +164,14 @@ def view_order_page(old_window):
 
         # Item name
         if "item" in item:
-            canvas.create_text(100, y, text=item["item"], anchor="w",font=("Arial", 24), fill="black")
+            canvas.create_text(100, y, text=f"{item['item']}", anchor="w",font=("Arial", 24), fill="black")
             y += 35
 
+        # Quantity
+        qty = item.get("Quantity", 1)
+        canvas.create_text(120, y, text=f"Quantity: {qty}", anchor="w",font=("Arial", 20))
+        y += 35
+        
         # Customizations
         if "Cold" in item:
             canvas.create_text(120, y, text=f"Cold: {item['Cold']}", anchor="w", font=("Arial", 20))
@@ -344,6 +366,14 @@ def customize_d_page(old_window, drink_name="item"):
     
     # save item system
     def save_item():
+        qty = qty_entry.get()
+
+        if qty.isdigit():       # check is the input number or not
+            c_custom["Quantity"] = int(qty)
+        else:
+            messagebox.showerror("Error", "Please enter a number")
+            return
+        
         # make random number in 100 to 999
         order_num = random.randint(100, 999)
 
@@ -353,6 +383,11 @@ def customize_d_page(old_window, drink_name="item"):
 
         messagebox.showinfo("Saved", f"Item added! Order #{order_num}")
         menu_page(custd_p)
+
+    qty = tk.Label(custd_p, text="𝙌𝙪𝙖𝙣𝙩𝙞𝙩𝙮 : ", font=(30), bg="#faedcd")
+    qty.place(x=100, y=700)
+    qty_entry = tk.Entry(custd_p, font=(30), bg="#d4a373")
+    qty_entry.place(x=220, y=700)
 
     add_btn = tk.Button(custd_p, text="𝘼𝙙𝙙 𝙄𝙩𝙚𝙢", command=save_item,font=(30), bg="#d4a373")
     add_btn.place(x=700, y=800)
@@ -581,8 +616,8 @@ def menu_page(old_window):
     canvas.create_window(700, 370, window=item4)
     canvas.create_window(700, 450, window=btn4)
 
-    back_btn = tk.Button(menu_p, text="<", command=lambda: login_page(menu_p),font=(40), bg="#d4a373")
-    back_btn.place(x=100, y=400)
+    back_btn = tk.Button(menu_p, text="𝘽𝙖𝙘𝙠 𝙩𝙤 \n𝙡𝙤𝙜𝙞𝙣 𝙥𝙖𝙜𝙚", command=lambda: login_page(menu_p),font=(40), bg="#d4a373")
+    back_btn.place(x=90, y=400)
     next_btn = tk.Button(menu_p, text=">", command=lambda: menu_page2(menu_p),font=(40), bg="#d4a373")
     next_btn.place(x=1350, y=400)
     vop_btn = tk.Button(menu_p, text="𝙑𝙄𝙀𝙒 𝙊𝙍𝘿𝙀𝙍", command=lambda: view_order_page(menu_p),font=(30), bg="#d4a373")
