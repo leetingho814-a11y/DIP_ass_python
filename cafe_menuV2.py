@@ -11,7 +11,7 @@
 # https://emojipedia.org/wastebasket (for rubblish bin emoji)
 # https://www.w3schools.com/python/ref_string_isdigit.asp (for isdigit)
 # https://carpedm20.github.io/emoji/ (for eye emoji)
-
+# https://realpython.com/ref/keywords/global/ (for global)
 
 #importing libraries
 import tkinter as tk
@@ -23,6 +23,8 @@ accounts = {}
 orders = []
 current_custom = {}
 
+# Set the total price = 0
+total_price = 0
 
 # start_page
 root = tk.Tk()          
@@ -82,7 +84,7 @@ def login_page(old_window):
     back_btn.grid(row=4, column=1, pady=10)
 
 login_p_enter = tk.Button(root, text="𝓛𝓸𝓰𝓲𝓷 𝓹𝓪𝓰𝓮", command=lambda: login_page(root),width=70, height=2, font=(30), fg="white", bg="#d4a373")
-login_p_enter.pack(pady=50)
+login_p_enter.pack(pady=110)
 
 
 # Sign up page function
@@ -125,7 +127,7 @@ def signup_page(old_window):
 
         # Save new account
         accounts[user] = pwd
-        messagebox.showinfo("Success", "Account created successfully! Hopping to login page...")
+        messagebox.showinfo("Success", "Account created successfully!")
         login_page(signup_p)
 
     eye_btn = tk.Button(signup_p, text="👁", command=lambda: show_ps(),font=(30), bg="#d4a373")
@@ -136,7 +138,7 @@ def signup_page(old_window):
     back_btn.grid(row=4, column=1, pady=10)
 
 signup_p_enter = tk.Button(root, text="𝓢𝓲𝓰𝓷𝓾𝓹 𝓹𝓪𝓰𝓮", command=lambda: signup_page(root),width=70, height=2, font=(30), fg="white", bg="#d4a373")
-signup_p_enter.pack(pady=50)
+signup_p_enter.pack(pady=90)
 
 
 # View my order page 
@@ -169,9 +171,13 @@ def view_order_page(old_window):
 
         # Quantity
         qty = item.get("Quantity", 1)
-        canvas.create_text(120, y, text=f"Quantity: {qty}", anchor="w",font=("Arial", 20))
+        canvas.create_text(120, y, text=f"Quantity: {qty}", anchor="w",font=("BOLD", 20))
         y += 35
         
+        # Price
+        canvas.create_text(120, y, text=f"Total Price: ${item['Price']:.2f}", anchor="w",font=("Arial", 20))      # :.2f for 2 decimal places
+        y += 35
+
         # Customizations
         if "Cold" in item:
             canvas.create_text(120, y, text=f"Cold: {item['Cold']}", anchor="w", font=("Arial", 20))
@@ -206,9 +212,6 @@ def view_order_page(old_window):
 
     tk.Button(order_window, text="𝙂𝙤 𝙋𝙖𝙮", command=lambda: payment_page(order_window),font=(30), bg="#d4a373").pack(pady=1)
     tk.Button(order_window, text="𝘽𝙖𝙘𝙠", command=lambda: menu_page(order_window),font=(30), bg="#d4a373").pack(padx=20)
-
-view_order_p_enter = tk.Button(root, text="𝓥𝓲𝓮𝔀 𝓨𝓸𝓾𝓻 𝓞𝓻𝓭𝓮r", command=lambda: view_order_page(root),width=70, height=2, font=(30), fg="white", bg="#d4a373")
-view_order_p_enter.pack(pady=50)
 
 # Payment page 
 def payment_page(old_window):
@@ -274,11 +277,23 @@ def customize_d_page(old_window, drink_name="item"):
     custd_p.geometry("3000x2000")
     custd_p.configure(bg="#faedcd")
 
+    global total_price      # global for total price, so it can be used in other function
+    total_price = 0   # reset price for new item
+
+    if drink_name == "𝙃𝙤𝙩 𝘾𝙝𝙤𝙘𝙤𝙡𝙖𝙩𝙚":
+        total_price = 2.50
+    elif drink_name == "𝘾𝙤𝙛𝙛𝙚𝙚":
+        total_price = 2.50
+    elif drink_name == "𝙈𝙖𝙘𝙝𝙖":
+        total_price = 2.00
+    elif drink_name == "𝙏𝙚𝙖":
+        total_price = 1.50
+
     tk.Label(custd_p, text="𝓒𝓾𝓼𝓽𝓸𝓶𝓲𝔃𝓮 𝓟𝓪𝓰𝓮", font=("Arial", 40), bg="#faedcd")\
         .grid(row=0, column=0, columnspan=2, pady=50, padx=200)
     
     # reset the customisation for each item
-    global c_custom
+    global c_custom     # global for customisation, so it can be used in other function
     c_custom = {"item": drink_name}
 
     def cold_select():            # color changed
@@ -339,6 +354,8 @@ def customize_d_page(old_window, drink_name="item"):
     extra_hot.place(x=900, y=550)
 
     def ext_shot_select():              # color changed
+        global total_price
+        total_price += 1.00
         ext_btn.config(bg="#ffffff")
     ext_btn = tk.Button(custd_p, text="𝙀𝙭𝙩𝙧𝙖 𝙨𝙝𝙤𝙩 (+$1.00)", command=lambda: (c_custom.update({"Extra Shot": "Yes"}), ext_shot_select()),font=(15), bg="#d4a373")
     ext_btn.place(x=660, y=700)
@@ -366,22 +383,36 @@ def customize_d_page(old_window, drink_name="item"):
     
     # save item system
     def save_item():
+        global total_price      
         qty = qty_entry.get()
+        add_btn.config(state="disabled")            # Make the button state to disable, for fixing double clicking
 
         if qty.isdigit():       # check is the input number or not
-            c_custom["Quantity"] = int(qty)
+            qty = int(qty)
+
+            if qty < 1:
+                messagebox.showerror("Error", "Quantity must be more than 0")
+                add_btn.config(state="normal")       # make button state back to normal for qty error
+                return
+            elif qty > 100:
+                messagebox.showerror("Error", "Quantity must be less than 100")
+                add_btn.config(state="normal")       # make button state back to normal for qty 
+                return
+            c_custom["Quantity"] = qty
+            total_price = total_price * qty   # calculate the price
         else:
             messagebox.showerror("Error", "Please enter a number")
+            add_btn.config(state="normal")       # make button state back to normal for next item
             return
         
         # make random number in 100 to 999
         order_num = random.randint(100, 999)
-
         c_custom["Order Number"] = order_num        # add order number
-
+        c_custom["Price"] = total_price
         orders.append(c_custom.copy())      # add custom to order list
 
         messagebox.showinfo("Saved", f"Item added! Order #{order_num}")
+        add_btn.config(state="normal")       # make button state back to normal for next item
         menu_page(custd_p)
 
     qty = tk.Label(custd_p, text="𝙌𝙪𝙖𝙣𝙩𝙞𝙩𝙮 : ", font=(30), bg="#faedcd")
@@ -399,11 +430,23 @@ def customize_f_page(old_window, food_name="item"):
     custF_p.geometry("3000x2000")
     custF_p.configure(bg="#faedcd")
 
+    global total_price      # global for total price, so it can be used in other function
+    total_price = 0   # reset price for new item
+
+    if food_name == "𝘽𝙪𝙧𝙜𝙚𝙧":
+        total_price = 3.00
+    elif food_name == "𝙎𝙖𝙣𝙙𝙬𝙞𝙘𝙝":
+        total_price = 2.50
+    elif food_name == "𝙘𝙝𝙤𝙘𝙤𝙡𝙖𝙩𝙚 𝙘𝙖𝙠𝙚":
+        total_price = 2.00
+    elif food_name == "𝙈𝙪𝙛𝙛𝙞𝙣":
+        total_price = 1.50
+
     tk.Label(custF_p, text="𝓒𝓾𝓼𝓽𝓸𝓶𝓲𝔃𝓮 𝓟𝓪𝓰𝓮", font=("Arial", 40), bg="#faedcd")\
         .grid(row=0, column=0, columnspan=2, pady=50, padx=200)
     
     #reset the customisation for each item
-    global c_custom
+    global c_custom     # global for customisation, so it can be used in other function
     c_custom = {"item": food_name}
 
     def toasted_select():            # color changed
@@ -499,14 +542,40 @@ def customize_f_page(old_window, food_name="item"):
 
     # save item system
     def save_item():
+        global total_price      
+        qty = qty_entry.get()
+        add_btn.config(state="disabled")            # Make the button state to disable, for fixing double clicking
+
+        if qty.isdigit():       # check is the input number or not
+            qty = int(qty)
+
+            if qty < 1:
+                messagebox.showerror("Error", "Quantity must be more than 0")
+                return
+            elif qty > 100:
+                messagebox.showerror("Error", "Quantity must be less than 100")
+                return
+            c_custom["Quantity"] = qty
+            total_price = total_price * qty   # calculate the price
+        else:
+            messagebox.showerror("Error", "Please enter a number")
+            add_btn.config(state="normal")       # make button state back to normal for next item
+            return
+        
         # make random number in 100 to 999
         order_num = random.randint(100, 999)
+        c_custom["Order Number"] = order_num        # add order number
+        c_custom["Price"] = total_price
+        orders.append(c_custom.copy())      # add custom to order list
 
-        c_custom["Order Number"] = order_num        # add order number to customisation
-
-        orders.append(c_custom.copy())      # add customisation to the order list
-        messagebox.showinfo("Saved", "Item added to your order!")
+        messagebox.showinfo("Saved", f"Item added! Order #{order_num}")
+        add_btn.config(state="normal")       # make button state back to normal for next item
         menu_page(custF_p)
+
+    qty = tk.Label(custF_p, text="𝙌𝙪𝙖𝙣𝙩𝙞𝙩𝙮 : ", font=(30), bg="#faedcd")
+    qty.place(x=100, y=700)
+    qty_entry = tk.Entry(custF_p, font=(30), bg="#d4a373")
+    qty_entry.place(x=220, y=700)
 
     add_btn = tk.Button(custF_p, text="𝘼𝙙𝙙 𝙄𝙩𝙚𝙢", command=save_item,font=(30), bg="#d4a373")
     add_btn.place(x=700, y=800)
@@ -528,7 +597,7 @@ def menu_page2(old_window):
     # item 1
     canvas.create_rectangle(50, 50, 450, 270, fill="#faedcd", outline="black")
 
-    item = tk.Label(menu2_p, text="𝘽𝙪𝙧𝙜𝙚𝙧", font=("Arial", 20),bg="#faedcd")
+    item = tk.Label(menu2_p, text="𝘽𝙪𝙧𝙜𝙚𝙧\n$3.00", font=("Arial", 20),bg="#faedcd")
     btn = tk.Button(menu2_p, text="𝘾𝙪𝙨𝙩𝙤𝙢𝙞𝙯𝙚", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_f_page(menu2_p,"𝘽𝙪𝙧𝙜𝙚𝙧"))
 
     canvas.create_window(250, 120, window=item) 
@@ -537,7 +606,7 @@ def menu_page2(old_window):
     # item 2
     canvas.create_rectangle(500, 50, 900, 270, fill="#faedcd", outline="black")
 
-    item2 = tk.Label(menu2_p, text="𝙎𝙖𝙣𝙙𝙬𝙞𝙘𝙝", font=("Arial", 20), bg="#faedcd")
+    item2 = tk.Label(menu2_p, text="𝙎𝙖𝙣𝙙𝙬𝙞𝙘𝙝\n$2.50", font=("Arial", 20), bg="#faedcd")
     btn2 = tk.Button(menu2_p, text="𝘾𝙪𝙨𝙩𝙤𝙢𝙞𝙯𝙚", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_f_page(menu2_p,"𝙎𝙖𝙣𝙙𝙬𝙞𝙘𝙝"))
 
     canvas.create_window(700, 120, window=item2)
@@ -546,7 +615,7 @@ def menu_page2(old_window):
     # item 3
     canvas.create_rectangle(50, 300, 450, 530, fill="#faedcd", outline="black")
 
-    item3 = tk.Label(menu2_p, text="𝙘𝙝𝙤𝙘𝙤𝙡𝙖𝙩𝙚 𝙘𝙖𝙠𝙚", font=("Arial", 20),bg="#faedcd")
+    item3 = tk.Label(menu2_p, text="𝙘𝙝𝙤𝙘𝙤𝙡𝙖𝙩𝙚 𝙘𝙖𝙠𝙚\n$2.00", font=("Arial", 20),bg="#faedcd")
     btn3 = tk.Button(menu2_p, text="𝘾𝙪𝙨𝙩𝙤𝙢𝙞𝙯𝙚", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_f_page(menu2_p,"𝙘𝙝𝙤𝙘𝙤𝙡𝙖𝙩𝙚 𝙘𝙖𝙠𝙚"))
 
     canvas.create_window(250, 370, window=item3) 
@@ -555,7 +624,7 @@ def menu_page2(old_window):
     # item 4
     canvas.create_rectangle(500, 300, 900, 530, fill="#faedcd", outline="black")
 
-    item4 = tk.Label(menu2_p, text="𝙈𝙪𝙛𝙛𝙞𝙣", font=("Arial", 20), bg="#faedcd")
+    item4 = tk.Label(menu2_p, text="𝙈𝙪𝙛𝙛𝙞𝙣\n$1.50", font=("Arial", 20), bg="#faedcd")
     btn4 = tk.Button(menu2_p, text="𝘾𝙪𝙨𝙩𝙤𝙢𝙞𝙯𝙚", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_f_page(menu2_p,"𝙈𝙪𝙛𝙛𝙞𝙣"))
 
     canvas.create_window(700, 370, window=item4)
@@ -583,7 +652,7 @@ def menu_page(old_window):
     # item 1
     canvas.create_rectangle(50, 50, 450, 270, fill="#faedcd", outline="black")
 
-    item = tk.Label(menu_p, text="𝙃𝙤𝙩 𝘾𝙝𝙤𝙘𝙤𝙡𝙖𝙩𝙚", font=("Arial", 20),bg="#faedcd")
+    item = tk.Label(menu_p, text="𝙃𝙤𝙩 𝘾𝙝𝙤𝙘𝙤𝙡𝙖𝙩𝙚\n$2.50", font=("Arial", 20),bg="#faedcd")
     btn = tk.Button(menu_p, text="𝘾𝙪𝙨𝙩𝙤𝙢𝙞𝙯𝙚", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_d_page(menu_p, "𝙃𝙤𝙩 𝘾𝙝𝙤𝙘𝙤𝙡𝙖𝙩𝙚"))
 
     canvas.create_window(250, 120, window=item) 
@@ -592,7 +661,7 @@ def menu_page(old_window):
     # item 2
     canvas.create_rectangle(500, 50, 900, 270, fill="#faedcd", outline="black")
 
-    item2 = tk.Label(menu_p, text="𝘾𝙤𝙛𝙛𝙚𝙚", font=("Arial", 20), bg="#faedcd")
+    item2 = tk.Label(menu_p, text="𝘾𝙤𝙛𝙛𝙚𝙚\n$2.50", font=("Arial", 20), bg="#faedcd")
     btn2 = tk.Button(menu_p, text="𝘾𝙪𝙨𝙩𝙤𝙢𝙞𝙯𝙚", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_d_page(menu_p, "𝘾𝙤𝙛𝙛𝙚𝙚"))
 
     canvas.create_window(700, 120, window=item2)
@@ -601,7 +670,7 @@ def menu_page(old_window):
     # item 3
     canvas.create_rectangle(50, 300, 450, 530, fill="#faedcd", outline="black")
 
-    item3 = tk.Label(menu_p, text="𝙈𝙖𝙘𝙝𝙖", font=("Arial", 20),bg="#faedcd")
+    item3 = tk.Label(menu_p, text="𝙈𝙖𝙘𝙝𝙖\n$2.00", font=("Arial", 20),bg="#faedcd")
     btn3 = tk.Button(menu_p, text="𝘾𝙪𝙨𝙩𝙤𝙢𝙞𝙯𝙚", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_d_page(menu_p, "𝙈𝙖𝙘𝙝𝙖"))
 
     canvas.create_window(250, 370, window=item3) 
@@ -610,7 +679,7 @@ def menu_page(old_window):
     # item 4
     canvas.create_rectangle(500, 300, 900, 530, fill="#faedcd", outline="black")
 
-    item4 = tk.Label(menu_p, text="𝙏𝙚𝙖", font=("Arial", 20), bg="#faedcd")
+    item4 = tk.Label(menu_p, text="𝙏𝙚𝙖\n$1.50", font=("Arial", 20), bg="#faedcd")
     btn4 = tk.Button(menu_p, text="𝘾𝙪𝙨𝙩𝙤𝙢𝙞𝙯𝙚", bg="#d4aa73", fg="white", font=("Arial", 20), command=lambda: customize_d_page(menu_p, "𝙏𝙚𝙖"))
 
     canvas.create_window(700, 370, window=item4)
@@ -635,17 +704,9 @@ def main_page(old_window):
     label.pack(pady=20)
     
     login_p_enter2 = tk.Button(main_p, text="𝓛𝓸𝓰𝓲𝓷 𝓹𝓪𝓰𝓮", command=lambda: login_page(main_p),width=70, height=2, font=(30), fg="white", bg="#d4a373")
-    login_p_enter2.pack(pady=50)
+    login_p_enter2.pack(pady=110)
     signup_p_enter2 = tk.Button(main_p, text="𝓢𝓲𝓰𝓷𝓾𝓹 𝓹𝓪𝓰𝓮", command=lambda: signup_page(main_p),width=70, height=2, font=(30), fg="white", bg="#d4a373")
-    signup_p_enter2.pack(pady=50)
-    view_order_p_enter2 = tk.Button(main_p, text="𝓥𝓲𝓮𝔀 𝓨𝓸𝓾𝓻 𝓞𝓻𝓭𝓮r", command=lambda: view_order_page(main_p),width=70, height=2, font=(30), fg="white", bg="#d4a373")
-    view_order_p_enter2.pack(pady=50)
-    menu_p_enter2 = tk.Button(main_p, text="𝓜𝓮𝓷𝓾", command=lambda: menu_page(main_p),width=70, height=2, font=(30), fg="white", bg="#d4a373")
-    menu_p_enter2.pack(pady=50)
-
-menu_p_enter = tk.Button(root, text="𝓜𝓮𝓷𝓾", command=lambda: menu_page(root),width=70, height=2, font=(30), fg="white", bg="#d4a373")
-menu_p_enter.pack(pady=50)
-
+    signup_p_enter2.pack(pady=90)
 
 # Start the loop
 if __name__ == "__main__":
