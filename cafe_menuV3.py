@@ -18,14 +18,17 @@
 import tkinter as tk
 from tkinter import messagebox
 import random
+import datetime as dt
 
 # list
 accounts = {}
 orders = []
 current_custom = {}
 
-# Set the total price = 0
+
+# set value
 total_price = 0
+receipt_num = 1
 
 # start_page
 root = tk.Tk()          
@@ -219,6 +222,14 @@ view_order_p_enter.pack(pady=50)
 
 # Payment main page 
 def payment_m_page(old_window):
+    try:
+        if orders == []:       # check if the order is empty or not
+            messagebox.showerror("Error", "Your order is empty, please order something before going to payment page")
+            return
+    except:
+        pass
+
+# if the order is not empty, then go to payment page
     old_window.withdraw()       # hide the old window that user was in
     payment_pm = tk.Toplevel()      # create window
     payment_pm.title("Payment Page")
@@ -282,9 +293,10 @@ def payment_SC_page(old_window):
     cash.place(x=600, y=200)
     sc = tk.Button(payment_psc, text="𝙎𝙩𝙪𝙙𝙚𝙣𝙩 𝘾𝙖𝙧d", font=(30), fg="black", bg="#ffffff",width=85, height=4,command=lambda: payment_SC_page(payment_psc))
     sc.place(x=100, y=400)
-    tk.Label(payment_psc, text="𝗦𝘁𝘂𝗱𝗲𝗻𝘁 𝗖𝗮𝗿𝗱 𝗡𝘂𝗺𝗯𝗲𝗿", font=("Arial", 20), bg="#faedcd").place(x=100, y=550)
-    username_entry = tk.Entry(payment_psc, font=("Arial", 30), bg="#d4a373")
-    username_entry.place(x=100, y=600)
+    tk.Label(payment_psc, text="𝗦𝘁𝘂𝗱𝗲𝗻𝘁 𝗖𝗮𝗿𝗱 𝗡𝘂𝗺𝗯𝗲𝗿*", font=("Arial", 20), bg="#faedcd").place(x=100, y=550)
+    global student_entry     # global for student card entry, so it can be used in other function
+    student_entry = tk.Entry(payment_psc, font=("Arial", 30), bg="#d4a373")
+    student_entry.place(x=100, y=600)
 
     finish_btn = tk.Button(payment_psc, text="𝙁𝙞𝙣𝙞𝙨𝙝", command=lambda: finish_page(payment_psc),font=(30), bg="#d4a373")   
     finish_btn.place(x=650, y=800)
@@ -312,10 +324,10 @@ def payment_op_page(old_window):
     arrive_pay_btn.place(x=100, y=550)
     Online_pay_btn = tk.Button(payment_po, text="𝗣𝗮𝘆 𝗢𝗻𝗹𝗶𝗻𝗲", font=(15), fg="black", bg="#ffffff",width=20, height=2)
     Online_pay_btn.place(x=400, y=550)
-    tk.Label(payment_po, text="𝗖𝗿𝗲𝗱𝗶𝘁 𝗖𝗮𝗿𝗱 𝗡𝘂𝗺𝗯𝗲𝗿", font=("Arial", 20), bg="#faedcd").place(x=100, y=650)
-    username_entry = tk.Entry(payment_po, font=("Arial", 30), bg="#d4a373")
-    username_entry.place(x=100, y=700)
-
+    tk.Label(payment_po, text="𝗖𝗿𝗲𝗱𝗶𝘁 𝗖𝗮𝗿𝗱 𝗡𝘂𝗺𝗯𝗲𝗿*", font=("Arial", 20), bg="#faedcd").place(x=100, y=650)
+    global credit_entry     # global for credit card entry, so it can be used in other function
+    credit_entry = tk.Entry(payment_po, font=("Arial", 30), bg="#d4a373")
+    credit_entry.place(x=100, y=700)
     finish_btn = tk.Button(payment_po, text="𝙁𝙞𝙣𝙞𝙨𝙝", command=lambda: finish_page(payment_po),font=(30), bg="#d4a373")   
     finish_btn.place(x=650, y=800)
     back_btn = tk.Button(payment_po, text="𝘽𝙖𝙘𝙠", command=lambda: menu_page(payment_po),font=(30), bg="#d4a373")
@@ -342,6 +354,7 @@ def payment_ap_page(old_window):
     arrive_pay_btn.place(x=100, y=550)
     Online_pay_btn = tk.Button(payment_pa, text="𝗣𝗮𝘆 𝗢𝗻𝗹𝗶𝗻𝗲", font=(15), fg="black", bg="#d4a373",width=20, height=2,command=lambda:payment_op_page(payment_pa))
     Online_pay_btn.place(x=400, y=550)
+    tk.Label(payment_pa, text="𝗔𝗿𝗿𝗶𝘃𝗲 𝗣𝗮𝘆 𝘀𝗲𝗹𝗲𝗰𝘁𝗲𝗱, 𝗽𝗹𝗲𝗮𝘀𝗲 𝗴𝗼 𝘁𝗼 𝗰𝗮𝗳𝗲 𝗮𝗿𝗿𝗶𝘃𝗲 𝗽𝗮𝘆 𝗿𝗼𝘄 𝘄𝗵𝗲𝗻 𝘂 𝗮𝗿𝗿𝗶𝘃𝗲", font=("Arial", 20), bg="#faedcd").place(x=100, y=650)
 
     finish_btn = tk.Button(payment_pa, text="𝙁𝙞𝙣𝙞𝙨𝙝", command=lambda: finish_page(payment_pa),font=(30), bg="#d4a373")   
     finish_btn.place(x=650, y=800)
@@ -377,6 +390,20 @@ def payment_page(old_window):
 
 # Finish page
 def finish_page(old_window):
+    try:
+        if student_entry.get() == "":       # check if student card entry is filled
+            messagebox.showerror("Error", "Please enter your student card number")
+            return
+    except:
+        pass
+    try:
+        if credit_entry.get() == "":       # check if credit card entry is filled
+            messagebox.showerror("Error", "Please enter your credit card number")
+            return
+    except:
+        pass
+
+    # if the entry is filled or not exist, then go to finish page
     old_window.withdraw()
     fin_p = tk.Toplevel()
     fin_p.title("Finish Page")
@@ -384,7 +411,7 @@ def finish_page(old_window):
     fin_p.configure(bg="#faedcd")
     label = tk.Label(fin_p, text="𝙏𝙝𝙖𝙣𝙠 𝙮𝙤𝙪 𝙛𝙤𝙧 𝙤𝙧𝙙𝙚𝙧, 𝙨𝙚𝙚 𝙮𝙤𝙪 𝙨𝙤𝙤𝙣!", font=("Arial", 50),bg="#faedcd")
     label.pack(pady=120)
-
+    
     finish_btn = tk.Button(fin_p, text="𝙁𝙞𝙣𝙞𝙨𝙝", command=fin_p.destroy,font=(30), bg="#d4a373")       # destroy page
     finish_btn.place(x=650, y=800)
     backtomain_btn = tk.Button(fin_p, text="𝘽𝙖𝙘𝙠 𝙏𝙤 𝙈𝙖𝙞𝙣", command=lambda: main_page(fin_p),font=(30), bg="#d4a373")
