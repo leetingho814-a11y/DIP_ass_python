@@ -18,7 +18,6 @@
 #importing libraries
 import tkinter as tk
 from tkinter import messagebox
-import random
 import datetime as dt
 
 # list
@@ -30,6 +29,7 @@ current_custom = {}
 # set value
 total_price = 0
 receipt_num = 1
+payment_type = ""
 
 # start_page
 root = tk.Tk()          
@@ -41,13 +41,11 @@ label = tk.Label(root, text="𝓦𝓮𝓵𝓬𝓸𝓶𝓮 𝓽𝓸 𝓽𝓱𝓮 
 label.pack(pady=20)
 # signup button in start page
 signup_p_enter = tk.Button(root, text="𝓢𝓲𝓰𝓷𝓾𝓹 𝓹𝓪𝓰𝓮", command=lambda: signup_page(root),width=70, height=2, font=(30), fg="white", bg="#d4a373")
-signup_p_enter.pack(pady=50)
+signup_p_enter.pack(pady=120)
 # login button in start page
 login_p_enter = tk.Button(root, text="𝓛𝓸𝓰𝓲𝓷 𝓹𝓪𝓰𝓮", command=lambda: login_page(root),width=70, height=2, font=(30), fg="white", bg="#d4a373")
-login_p_enter.pack(pady=50)
-# View order button in main page
-view_order_p_enter = tk.Button(root, text="𝓥𝓲𝓮𝔀 𝓨𝓸𝓾𝓻 𝓞𝓻𝓭𝓮𝓻", command=lambda: view_order_page(root),width=70, height=2, font=(30), fg="white", bg="#d4a373")
-view_order_p_enter.pack(pady=50)
+login_p_enter.pack(pady=120)
+
 
 # login page function
 def login_page(old_window):
@@ -57,18 +55,15 @@ def login_page(old_window):
     login_p.geometry("3000x2000")
     login_p.configure(bg="#faedcd")
 
-    tk.Label(login_p, text="𝓛𝓸𝓰𝓲𝓷 𝓹𝓪𝓰𝓮", font=("Arial", 40), bg="#faedcd")\
-        .grid(row=0, column=0, columnspan=2, pady=20)
+    tk.Label(login_p, text="𝓛𝓸𝓰𝓲𝓷 𝓹𝓪𝓰𝓮", font=("Arial", 40), bg="#faedcd").place(x=600, y=50)
 
-    tk.Label(login_p, text="Username:", font=("Arial", 30), bg="#faedcd")\
-        .grid(row=1, column=0, padx=50, pady=10, sticky="e")
+    tk.Label(login_p, text="𝙐𝙨𝙚𝙧𝙣𝙖𝙢𝙚", font=("Arial", 30), bg="#faedcd").place(x=670, y=250)
     username_entry = tk.Entry(login_p, font=("Arial", 30), bg="#d4a373")
-    username_entry.grid(row=1, column=1, padx=20)
+    username_entry.place(x=540, y=330)
 
-    tk.Label(login_p, text="Password:", font=("Arial", 30), bg="#faedcd")\
-        .grid(row=2, column=0, padx=50, pady=10, sticky="e")
+    tk.Label(login_p, text="𝙋𝙖𝙨𝙨𝙬𝙤𝙧𝙙", font=("Arial", 30), bg="#faedcd").place(x=670, y=450)
     password_entry = tk.Entry(login_p, font=("Arial", 30), show="*", bg="#d4a373")
-    password_entry.grid(row=2, column=1, padx=20)
+    password_entry.place(x=540, y=530)
 
     # Show Password system
     def show_ps():
@@ -84,17 +79,17 @@ def login_page(old_window):
 
         # Check saved accounts
         if user in accounts and accounts[user] == pwd:
-            messagebox.showinfo("Login Success", f"Welcome, {user}!")
+            messagebox.showinfo("Login Success", f"Welcome, {user}!\nclick ok to menu page")
             menu_page(login_p)
         else:
-            messagebox.showerror("Login Failed", "Invalid username or password")
+            messagebox.showerror("Login Failed", "Invalid username or password\nclick ok to try again")
 
     eye_btn = tk.Button(login_p, text="👁", command=lambda: show_ps(),font=(30), bg="#d4a373")
-    eye_btn.grid(row=2, column=2, pady=10)
+    eye_btn.place(x=990, y=533)
     login_btn = tk.Button(login_p, text="𝓛𝓸𝓰𝓲𝓷", command=login,font=(30), bg="#d4a373",)
-    login_btn.grid(row=3, column=1, pady=10)
-    back_btn = tk.Button(login_p, text="𝘽𝙖𝙘𝙠", command=lambda: main_page(login_p),font=(30), bg="#d4a373")
-    back_btn.grid(row=4, column=1, pady=10)
+    login_btn.place(x=700, y=650)
+    back_btn = tk.Button(login_p, text="𝙓", command=lambda: main_page(login_p),font=(30), bg="#d4a373")
+    back_btn.place(x=1400, y=65)
 
 
 # Sign up page function
@@ -105,18 +100,15 @@ def signup_page(old_window):
     signup_p.geometry("3000x2000")
     signup_p.configure(bg="#faedcd")
 
-    tk.Label(signup_p, text="𝓢𝓲𝓰𝓷𝓾𝓹 𝓹𝓪𝓰𝓮", font=("Arial", 40), bg="#faedcd")\
-        .grid(row=0, column=0, columnspan=2, pady=20)
+    tk.Label(signup_p, text="𝓢𝓲𝓰𝓷𝓾𝓹 𝓹𝓪𝓰𝓮", font=("Arial", 40), bg="#faedcd").place(x=600, y=50)
 
-    tk.Label(signup_p, text="Username:", font=("Arial", 30), bg="#faedcd")\
-        .grid(row=1, column=0, padx=50, pady=10, sticky="e")
+    tk.Label(signup_p, text="𝙐𝙨𝙚𝙧𝙣𝙖𝙢𝙚", font=("Arial", 30), bg="#faedcd").place(x=670, y=250)
     username_entry = tk.Entry(signup_p, font=("Arial", 30), bg="#d4a373")
-    username_entry.grid(row=1, column=1, padx=20)
+    username_entry.place(x=540, y=330)
 
-    tk.Label(signup_p, text="Password:", font=("Arial", 30), bg="#faedcd")\
-        .grid(row=2, column=0, padx=50, pady=10, sticky="e")
+    tk.Label(signup_p, text="𝙋𝙖𝙨𝙨𝙬𝙤𝙧𝙙", font=("Arial", 30), bg="#faedcd").place(x=670, y=450)
     password_entry = tk.Entry(signup_p, font=("Arial", 30), show="*", bg="#d4a373")
-    password_entry.grid(row=2, column=1, padx=20)
+    password_entry.place(x=540, y=530)
 
     # Show Password system
     def show_ps():
@@ -132,20 +124,20 @@ def signup_page(old_window):
 
         # Check username already in account or not
         if user in accounts:
-            messagebox.showerror("Sign Up Failed", "Username already exists")
+            messagebox.showerror("Sign Up Failed", "Username already exists\nclick ok to try again")
             return
 
         # Save new account
         accounts[user] = pwd
-        messagebox.showinfo("Success", "Account created successfully! Hopping to login page...")
+        messagebox.showinfo("Success", "Account created successfully! \nclick ok to hop in login page")
         login_page(signup_p)
 
     eye_btn = tk.Button(signup_p, text="👁", command=lambda: show_ps(),font=(30), bg="#d4a373")
-    eye_btn.grid(row=2, column=2, pady=10)
+    eye_btn.place(x=990, y=533)
     signup_btn = tk.Button(signup_p, text="𝓢𝓲𝓰𝓷𝓾𝓹", command=signup,font=(30), bg="#d4a373")
-    signup_btn.grid(row=3, column=1, pady=10)
-    back_btn = tk.Button(signup_p, text="𝘽𝙖𝙘𝙠", command=lambda: main_page(signup_p),font=(30), bg="#d4a373")
-    back_btn.grid(row=4, column=1, pady=10)
+    signup_btn.place(x=700, y=650)
+    back_btn = tk.Button(signup_p, text="𝙓", command=lambda: main_page(signup_p),font=(30), bg="#d4a373")
+    back_btn.place(x=1400, y=65)
 
 
 # View my order page 
@@ -162,10 +154,10 @@ def view_order_page(old_window):
         global receipt_num      # for reset receipt number after delete
         if orders:
             orders.pop()   # remove last item
-            messagebox.showinfo("Deleted", "Item removed")
-            receipt_num = 1     #reset receipt number to 1, so the next order will start from 1 again
+            messagebox.showinfo("Deleted", "Item removed\nclick ok to next")
+            receipt_num  = receipt_num-1     # receipt number -1, fix fixing the error
         else:
-            messagebox.showerror("Error", "No items to delete")
+            messagebox.showerror("Error", "No items to delete\nclick ok to return")
         window.destroy()    # refresh the page to show the updated order list
         view_order_page(root)
 
@@ -228,7 +220,7 @@ def view_order_page(old_window):
 def payment_m_page(old_window):
     try:
         if orders == []:       # check if the order is empty or not
-            messagebox.showerror("Error", "Your order is empty, please order something before going to payment page")
+            messagebox.showerror("Error", "Your order is empty, please order something before going to payment page\nclick ok for next")
             return
     except:
         pass
@@ -251,9 +243,10 @@ def payment_m_page(old_window):
     tk.Label(payment_pm, text="𝗦𝗲𝗹𝗲𝗰𝘁 𝘁𝗵𝗲 𝗽𝗮𝘆𝗺𝗲𝗻𝘁 𝘆𝗼𝘂 𝘄𝗼𝘂𝗹𝗱 𝗹𝗶𝗸𝗲 𝘁𝗼 𝘂𝘀𝗲", font=("Arial", 20), bg="#faedcd").place(x=100, y=550)
 
     finish_btn = tk.Button(payment_pm, text="𝙁𝙞𝙣𝙞𝙨𝙝", command=lambda: finish_page(payment_pm),font=(30), bg="#d4a373")   
-    finish_btn.place(x=650, y=800)
-    back_btn = tk.Button(payment_pm, text="𝘽𝙖𝙘𝙠", command=lambda: menu_page(payment_pm),font=(30), bg="#d4a373")
-    back_btn.place(x=750, y=800)
+    finish_btn.place(x=720, y=800)
+    back_btn = tk.Button(payment_pm, text="𝙓", command=lambda: view_order_page(payment_pm),font=(30), bg="#d4a373")
+    back_btn.place(x=1400, y=65)
+
 
 
 # Payment page 
@@ -263,6 +256,9 @@ def payment_CH_page(old_window):
     payment_pch.title("Payment Page")
     payment_pch.geometry("3000x2000")
     payment_pch.configure(bg="#faedcd")
+
+    global payment_type     # global for payment type, so it can be used in other function
+    payment_type = "cash"       # set the type as cash
 
     tk.Label(payment_pch, text="𝓟𝓪𝔂𝓶𝓮𝓷𝓽 𝓟𝓪𝓰𝓮", font=("Arial", 40), bg="#faedcd")\
         .grid(row=0, column=0, columnspan=2, pady=50, padx=200)
@@ -276,9 +272,9 @@ def payment_CH_page(old_window):
     tk.Label(payment_pch, text="𝗖𝗮𝘀𝗵 𝘄𝗶𝗹𝗹 𝗯𝗲 𝗔𝗿𝗿𝗶𝘃𝗲 𝗣𝗮𝘆", font=("Arial", 20), bg="#faedcd").place(x=100, y=550)
 
     finish_btn = tk.Button(payment_pch, text="𝙁𝙞𝙣𝙞𝙨𝙝", command=lambda: finish_page(payment_pch),font=(30), bg="#d4a373")   
-    finish_btn.place(x=650, y=800)
-    back_btn = tk.Button(payment_pch, text="𝘽𝙖𝙘𝙠", command=lambda: menu_page(payment_pch),font=(30), bg="#d4a373")
-    back_btn.place(x=750, y=800)
+    finish_btn.place(x=720, y=800)
+    back_btn = tk.Button(payment_pch, text="𝙓", command=lambda: view_order_page(payment_pch),font=(30), bg="#d4a373")
+    back_btn.place(x=1400, y=65)
 
 
 # Payment page 
@@ -288,6 +284,9 @@ def payment_SC_page(old_window):
     payment_psc.title("Payment Page")
     payment_psc.geometry("3000x2000")
     payment_psc.configure(bg="#faedcd")
+
+    global payment_type         # global payment for using in this function
+    payment_type = "student card"     # set the payment type
 
     tk.Label(payment_psc, text="𝓟𝓪𝔂𝓶𝓮𝓷𝓽 𝓟𝓪𝓰𝓮", font=("Arial", 40), bg="#faedcd")\
         .grid(row=0, column=0, columnspan=2, pady=50, padx=200)
@@ -304,9 +303,9 @@ def payment_SC_page(old_window):
     student_entry.place(x=100, y=600)
 
     finish_btn = tk.Button(payment_psc, text="𝙁𝙞𝙣𝙞𝙨𝙝", command=lambda: finish_page(payment_psc),font=(30), bg="#d4a373")   
-    finish_btn.place(x=650, y=800)
-    back_btn = tk.Button(payment_psc, text="𝘽𝙖𝙘𝙠", command=lambda: menu_page(payment_psc),font=(30), bg="#d4a373")
-    back_btn.place(x=750, y=800)
+    finish_btn.place(x=720, y=800)
+    back_btn = tk.Button(payment_psc, text="𝙓", command=lambda: view_order_page(payment_psc),font=(30), bg="#d4a373")
+    back_btn.place(x=1400, y=65)
 
 
 # Payment page 
@@ -316,6 +315,10 @@ def payment_op_page(old_window):
     payment_po.title("Payment Page")
     payment_po.geometry("3000x2000")
     payment_po.configure(bg="#faedcd")
+
+    global payment_type         # global payment for using in this function
+    payment_type = "credit"     # set the payment type
+
 
     tk.Label(payment_po, text="𝓟𝓪𝔂𝓶𝓮𝓷𝓽 𝓟𝓪𝓰𝓮", font=("Arial", 40), bg="#faedcd")\
         .grid(row=0, column=0, columnspan=2, pady=50, padx=200)
@@ -335,9 +338,9 @@ def payment_op_page(old_window):
     credit_entry = tk.Entry(payment_po, font=("Arial", 30), bg="#d4a373")
     credit_entry.place(x=100, y=700)
     finish_btn = tk.Button(payment_po, text="𝙁𝙞𝙣𝙞𝙨𝙝", command=lambda: finish_page(payment_po),font=(30), bg="#d4a373")   
-    finish_btn.place(x=650, y=800)
-    back_btn = tk.Button(payment_po, text="𝘽𝙖𝙘𝙠", command=lambda: menu_page(payment_po),font=(30), bg="#d4a373")
-    back_btn.place(x=750, y=800)
+    finish_btn.place(x=720, y=800)
+    back_btn = tk.Button(payment_po, text="𝙓", command=lambda: view_order_page(payment_po),font=(30), bg="#d4a373")
+    back_btn.place(x=1400, y=65)
 
 
 # Payment page 
@@ -347,6 +350,9 @@ def payment_ap_page(old_window):
     payment_pa.title("Payment Page")
     payment_pa.geometry("3000x2000")
     payment_pa.configure(bg="#faedcd")
+
+    global payment_type         # global payment type for using in this function
+    payment_type = "credit"     # set the payment type in credit
 
     tk.Label(payment_pa, text="𝓟𝓪𝔂𝓶𝓮𝓷𝓽 𝓟𝓪𝓰𝓮", font=("Arial", 40), bg="#faedcd")\
         .grid(row=0, column=0, columnspan=2, pady=50, padx=200)
@@ -364,9 +370,9 @@ def payment_ap_page(old_window):
     tk.Label(payment_pa, text="𝗔𝗿𝗿𝗶𝘃𝗲 𝗣𝗮𝘆 𝘀𝗲𝗹𝗲𝗰𝘁𝗲𝗱, 𝗽𝗹𝗲𝗮𝘀𝗲 𝗴𝗼 𝘁𝗼 𝗰𝗮𝗳𝗲 𝗮𝗿𝗿𝗶𝘃𝗲 𝗽𝗮𝘆 𝗿𝗼𝘄 𝘄𝗵𝗲𝗻 𝘂 𝗮𝗿𝗿𝗶𝘃𝗲", font=("Arial", 20), bg="#faedcd").place(x=100, y=650)
 
     finish_btn = tk.Button(payment_pa, text="𝙁𝙞𝙣𝙞𝙨𝙝", command=lambda: finish_page(payment_pa),font=(30), bg="#d4a373")   
-    finish_btn.place(x=650, y=800)
-    back_btn = tk.Button(payment_pa, text="𝘽𝙖𝙘𝙠", command=lambda: menu_page(payment_pa),font=(30), bg="#d4a373")
-    back_btn.place(x=750, y=800)
+    finish_btn.place(x=720, y=800)
+    back_btn = tk.Button(payment_pa, text="𝙓", command=lambda: view_order_page(payment_pa),font=(30), bg="#d4a373")
+    back_btn.place(x=1400, y=65)
 
 
 # Payment page 
@@ -376,6 +382,9 @@ def payment_page(old_window):
     payment_p.title("Payment Page")
     payment_p.geometry("3000x2000")
     payment_p.configure(bg="#faedcd")
+
+    global payment_type         # global payment type for using in this function
+    payment_type = "credit"     # set the payment type in credit
 
     tk.Label(payment_p, text="𝓟𝓪𝔂𝓶𝓮𝓷𝓽 𝓟𝓪𝓰𝓮", font=("Arial", 40), bg="#faedcd")\
         .grid(row=0, column=0, columnspan=2, pady=50, padx=200)
@@ -392,24 +401,29 @@ def payment_page(old_window):
     Online_pay_btn.place(x=400, y=550)
 
     finish_btn = tk.Button(payment_p, text="𝙁𝙞𝙣𝙞𝙨𝙝", command=lambda: finish_page(payment_p),font=(30), bg="#d4a373")   
-    finish_btn.place(x=650, y=800)
-    back_btn = tk.Button(payment_p, text="𝘽𝙖𝙘𝙠", command=lambda: menu_page(payment_p),font=(30), bg="#d4a373")
-    back_btn.place(x=750, y=800)
+    finish_btn.place(x=720, y=800)
+    back_btn = tk.Button(payment_p, text="𝙓", command=lambda: view_order_page(payment_p),font=(30), bg="#d4a373")
+    back_btn.place(x=1400, y=65)
 
 
 # Finish page
 def finish_page(old_window):
-    try:
-        if student_entry.get() == "":       # check if student card entry is filled
-            messagebox.showerror("Error", "Please enter your student card number")
-            return
-    except:
-        pass
-    try:
-        if credit_entry.get() == "":       # check if credit card entry is filled
-            messagebox.showerror("Error", "Please enter your credit card number")
-            return
-    except:
+    global payment_type
+    if payment_type == "student card":
+        try:
+            if student_entry.get() == "":       # check if student card entry is filled
+                messagebox.showerror("Error", "Please enter your student card number\nclick ok to try again")
+                return
+        except:
+            pass
+    if payment_type == "credit":
+        try:
+            if credit_entry.get() == "":       # check if credit card entry is filled
+                messagebox.showerror("Error", "Please enter your credit card number\nclick ok to try again")
+                return
+        except:
+            pass
+    if payment_type == "cash":
         pass
 
     # if the entry is filled or not exist, then go to finish page
@@ -551,17 +565,17 @@ def customize_d_hot_page(old_window, drink_name="item"):
             qty = int(qty)
 
             if qty < 1:
-                messagebox.showerror("Error", "Quantity must be more than 0")
+                messagebox.showerror("Error", "Quantity must be more than 0\nclick ok to try again")
                 add_btn.config(state="normal")       # make button state back to normal for qty error
                 return
             elif qty > 100:
-                messagebox.showerror("Error", "Quantity must be less than 100")
+                messagebox.showerror("Error", "Quantity must be less than 100\nclick ok to try again")
                 add_btn.config(state="normal")       # make button state back to normal for qty 
                 return
             c_custom["Quantity"] = qty
             total_price = total_price * qty   # calculate the price
         else:
-            messagebox.showerror("Error", "Please enter a number")
+            messagebox.showerror("Error", "Please enter a number\nclick ok to try again")
             add_btn.config(state="normal")       # make button state back to normal for next item
             return
         
@@ -573,7 +587,7 @@ def customize_d_hot_page(old_window, drink_name="item"):
         c_custom["Price"] = total_price
         orders.append(c_custom.copy())      # add custom to order list
 
-        messagebox.showinfo("Saved", f"Item added! Order #{order_num}")
+        messagebox.showinfo("Saved", f"Item added! Order #{order_num}\nclick ok to back menu")
         add_btn.config(state="normal")       # make button state back to normal for next item
         menu_page(custd_p_h)
 
@@ -675,17 +689,17 @@ def customize_d_cold_page(old_window, drink_name="item"):
             qty = int(qty)
 
             if qty < 1:
-                messagebox.showerror("Error", "Quantity must be more than 0")
+                messagebox.showerror("Error", "Quantity must be more than 0\nclick ok to try again")
                 add_btn.config(state="normal")       # make button state back to normal for qty error
                 return
             elif qty > 100:
-                messagebox.showerror("Error", "Quantity must be less than 100")
+                messagebox.showerror("Error", "Quantity must be less than 100\nclick ok to try again")
                 add_btn.config(state="normal")       # make button state back to normal for qty 
                 return
             c_custom["Quantity"] = qty
             total_price = total_price * qty   # calculate the price
         else:
-            messagebox.showerror("Error", "Please enter a number")
+            messagebox.showerror("Error", "Please enter a number\nclick ok to try again")
             add_btn.config(state="normal")       # make button state back to normal for next item
             return
         
@@ -697,7 +711,7 @@ def customize_d_cold_page(old_window, drink_name="item"):
         c_custom["Price"] = total_price
         orders.append(c_custom.copy())      # add custom to order list
 
-        messagebox.showinfo("Saved", f"Item added! Order #{order_num}")
+        messagebox.showinfo("Saved", f"Item added! Order #{order_num}\nclick ok to back menu")
         add_btn.config(state="normal")       # make button state back to normal for next item
         menu_page(custd_p_c)
 
@@ -833,15 +847,17 @@ def customize_f_page(old_window, food_name="item"):
         if qty.isdigit():       # check is the input number or not
             qty = int(qty)
             if qty < 1:
-                messagebox.showerror("Error", "Quantity must be more than 0")
+                messagebox.showerror("Error", "Quantity must be more than 0\nclick ok to try again")
+                add_btn.config(state="normal")       # make button state back to normal for next item
                 return
             elif qty > 100:
-                messagebox.showerror("Error", "Quantity must be less than 100")
+                messagebox.showerror("Error", "Quantity must be less than 100\nclick ok to try again")
+                add_btn.config(state="normal")       # make button state back to normal for next item
                 return
             c_custom["Quantity"] = qty
             total_price = total_price * qty   # calculate the price
         else:
-            messagebox.showerror("Error", "Please enter a number")
+            messagebox.showerror("Error", "Please enter a number\nclick ok to try again")
             add_btn.config(state="normal")       # make button state back to normal for next item
             return
         
@@ -852,7 +868,7 @@ def customize_f_page(old_window, food_name="item"):
         c_custom["Order Number"] = order_num        # add order number
         c_custom["Price"] = total_price
         orders.append(c_custom.copy())      # add custom to order list
-        messagebox.showinfo("Saved", f"Item added! Order #{order_num}")
+        messagebox.showinfo("Saved", f"Item added! Order #{order_num}\nclick ok to back menu")
         add_btn.config(state="normal")       # make button state back to normal for next item
         receipt_num += 1
         menu_page(custF_p)
@@ -887,7 +903,7 @@ def menu_page2(old_window):
         order["Quantity"] = 1
         order["Order Number"] = receipt_num
         orders.append(order)        # add order to order list
-        messagebox.showinfo("Quick Added", f"{name} added to order! Order #{receipt_num}")
+        messagebox.showinfo("Quick Added", f"{name} added to order! Order #{receipt_num}\nclick ok for next")
         receipt_num += 1        # add 1 for next order
 
     # item 1
@@ -952,7 +968,7 @@ def menu_page(old_window):
         order["Quantity"] = 1
         order["Order Number"] = receipt_num
         orders.append(order)        # add order to order list
-        messagebox.showinfo("Quick Added", f"{name} added to order! Order #{receipt_num}")
+        messagebox.showinfo("Quick Added", f"{name} added to order! Order #{receipt_num}\nclick ok to next")
         receipt_num += 1        # add 1 for next order
 
     # item 1
@@ -1011,18 +1027,10 @@ def main_page(old_window):
     label.pack(pady=20)
     
     # Buttons to enter other pages 
-    login_p_enter2 = tk.Button(main_p, text="𝓛𝓸𝓰𝓲𝓷 𝓹𝓪𝓰𝓮", command=lambda: login_page(main_p),width=70, height=2, font=(30), fg="white", bg="#d4a373")
-    login_p_enter2.pack(pady=50)
     signup_p_enter2 = tk.Button(main_p, text="𝓢𝓲𝓰𝓷𝓾𝓹 𝓹𝓪𝓰𝓮", command=lambda: signup_page(main_p),width=70, height=2, font=(30), fg="white", bg="#d4a373")
-    signup_p_enter2.pack(pady=50)
-    view_order_p_enter2 = tk.Button(main_p, text="𝓥𝓲𝓮𝔀 𝓨𝓸𝓾𝓻 𝓞𝓻𝓭𝓮r", command=lambda: view_order_page(main_p),width=70, height=2, font=(30), fg="white", bg="#d4a373")
-    view_order_p_enter2.pack(pady=50)
-    menu_p_enter2 = tk.Button(main_p, text="𝓜𝓮𝓷𝓾", command=lambda: menu_page(main_p),width=70, height=2, font=(30), fg="white", bg="#d4a373")
-    menu_p_enter2.pack(pady=50)
-
-# menu button in start page
-menu_p_enter = tk.Button(root, text="𝓜𝓮𝓷𝓾", command=lambda: menu_page(root),width=70, height=2, font=(30), fg="white", bg="#d4a373")
-menu_p_enter.pack(pady=50)
+    signup_p_enter2.pack(pady=120)
+    login_p_enter2 = tk.Button(main_p, text="𝓛𝓸𝓰𝓲𝓷 𝓹𝓪𝓰𝓮", command=lambda: login_page(main_p),width=70, height=2, font=(30), fg="white", bg="#d4a373")
+    login_p_enter2.pack(pady=120)
 
 
 # Start the loop
